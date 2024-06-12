@@ -39,7 +39,6 @@
 \newif\if@apacitation\@apacitationfalse
 
 \newif\if@langenglish\@langenglishfalse
-\newif\if@taunotdraftmode\@taunotdraftmodetrue
 \newif\if@programs\@programsfalse
 
 % Citation style selection.
@@ -61,10 +60,20 @@
     \@customcitationfalse
 }
 
-% Draft setting
-\DeclareOption{draft}{%
-    \@taunotdraftmodefalse
-}
+%\ifdefined\@draftmode
+%\else
+%    \gdef \@draftmode{false}
+%\fi
+
+% Define a conditional flag
+\newif\ifdraftmode
+
+% Check if \draftmode is defined, then set the flag accordingly
+\ifdefined\draftmode
+  \draftmodetrue
+\else
+  \draftmodefalse
+\fi
 
 % Programs to list?
 \DeclareOption{programs}{%
@@ -83,10 +92,8 @@
 %%%%% PACKAGES AND RELATED DEFINITIONS %%%%%
 
 % ISO-19005 compliant document (pdf/A-2b)
-\if@taunotdraftmode
-    \RequirePackage[a-2b,mathxmp]{pdfx}
-    \catcode30=12
-\fi
+\RequirePackage[a-2b,mathxmp]{pdfx}
+\catcode30=12
 
 % UTF-8 input
 \RequirePackage[utf8]{inputenc}
@@ -191,17 +198,15 @@
 \titlespacing{\subsubsection}{0em}{18pt}{12pt}
 \titlespacing{name=\subsubsection, numberless}{0em}{18pt}{12pt}
 
-% Language support for Finnish and English
-\RequirePackage[main=\@mainlanguage]{babel} % TODO: figure out if this is necessary
-\RequirePackage{csquotes}
+\RequirePackage{csquotes}% TODO: figure out if this is necessary - said to be used for quoting
 
 % Powerful color package
 \RequirePackage{xcolor}
 \definecolor{taupurple}{RGB}{78,0,148}
 
 % Date and time handling
-\RequirePackage[en-GB,finnish]{datetime2}
-\DTMlangsetup[en-GB,finnish]{showdayofmonth=false}
+\RequirePackage[en-GB]{datetime2}
+\DTMlangsetup[en-GB]{showdayofmonth=false}
 
 % Smart bibliography handling
 \RequirePackage
@@ -210,10 +215,6 @@
     citestyle=\@citationstyle,
     bibstyle=\@citationstyle]{biblatex}
 
-\DefineBibliographyStrings{finnish}{%
-    bibliography = {Lähteet},
-    references = {Lähteet}
-}
 \DefineBibliographyStrings{english}{%
     bibliography = {References},
     references = {References}
@@ -224,6 +225,9 @@
 \fi
 
 % Graphics inclusion and drawing
+\ifdraftmode
+  \PassOptionsToPackage{draft}{graphicx}
+\fi
 \RequirePackage{graphicx}
 
 % Caption formatting
@@ -285,28 +289,6 @@
     {Appendix~\thecontentslabel:~}{}{\titlerule*[1pc]{.}\contentspage}
 }{}
 
-\if@langenglish
-    \addto\captionsenglish{%
-        \renewcommand{\contentsname}{Contents}%
-        \renewcommand\listfigurename{List of Figures}%
-        \renewcommand{\listtablename}{List of Tables}%
-    }
-    \renewcommand{\appendixname}{\MakeUppercase{Appendix}}
-    \if@programs
-        \renewcommand{\lstlistlistingname}{List of Programs and Algorithms}
-    \fi
-\else
-    \addto\captionsfinnish{%
-        \renewcommand{\contentsname}{Sisällysluettelo}%
-        \renewcommand\listfigurename{Kuvaluettelo}%
-        \renewcommand{\listtablename}{Taulukkoluettelo}%
-    }
-    \renewcommand{\appendixname}{\MakeUppercase{Liite}}
-    \if@programs
-        \renewcommand{\lstlistlistingname}{Ohjelma- ja algoritmiluettelo}
-    \fi
-\fi
-
 % Flexible list modifications
 \RequirePackage{enumitem}
 
@@ -325,25 +307,6 @@
 
 %%%%% COMMAND DEFINITIONS %%%%%
 
-% Functional language selection
-\newcommand{\xselectlanguage}[1]{%
-  \begingroup\edef\x{\endgroup
-    \noexpand\selectlanguage{#1}}\x
-}
-
-% \frontmatter command
-\newcommand{\frontmatter}{
-    \clearpage
-    \pagenumbering{roman}
-    \setcounter{page}{0}
-}
-
-% \mainmatter command
-\newcommand{\mainmatter}{
-    \clearpage
-    \pagenumbering{arabic}
-    \setcounter{page}{1}
-}
 
 % Make the title
 \renewcommand\maketitle{
@@ -354,7 +317,7 @@
     {\raggedleft\Large\@author\par}
     \vspace{42pt}
     {\raggedleft\bf\LARGE\color{taupurple}%
-        \MakeUppercase{\@title}\par}
+        \MakeUppercase{\@title} \ifdraftmode\ \textbf{[DRAFT]}\fi\par}
     {\raggedleft\Large\color{taupurple}%
         \@subtitle\par}
     \vfill

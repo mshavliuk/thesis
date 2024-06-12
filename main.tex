@@ -193,7 +193,9 @@
 
 %%%%% FRONT MATTER %%%%%
 
-    \frontmatter
+\clearpage
+\pagenumbering{roman}
+\setcounter{page}{0}
 
 %%%%% Thesis information and title page.
 
@@ -226,7 +228,7 @@
 % The keywords to the thesis in the primary and
 % the secondary languages of the thesis
 
-    \maketitle
+\maketitle
 
 %%%%% Abstracts and preface.
 
@@ -240,80 +242,79 @@
 % first abstract. The second argument of
 % the \preface command takes the place where
 % the thesis was signed in.
+\ifdraftmode\else
     \abstract{tex/abstract.tex}
-    \preface{tex/preface.tex}{Tampereella}
-
-%%%%% Table of contents.
-
+    \preface{tex/preface.tex}{Tampere}
+    %%%%% Table of contents.
     \tableofcontents
 
-%%%%% Lists of figures, tables, listings and terms.
+    %%%%% Lists of figures, tables, listings and terms.
 
-% Print the lists of figures and/or tables.
-% Uncomment either of these commands as required.
-% Both are optional, but if there are many important
-% figures/tables, listing them may be a good idea.
+    % Print the lists of figures and/or tables.
+    % Uncomment either of these commands as required.
+    % Both are optional, but if there are many important
+    % figures/tables, listing them may be a good idea.
 
-% \listoffigures
-% \listoftables
-% \lstlistoflistings
+    % \listoffigures
+    % \listoftables
+    % \lstlistoflistings
 
-% Misc stuff related to how the glossary is displayed.
-% You can especially tweak the lengths to suit you!
+    % Misc stuff related to how the glossary is displayed.
+    % You can especially tweak the lengths to suit you!
     \glsaddall
     \setglossarystyle{taulong}
     \setlength{\glsnamewidth}{0.25\textwidth}
     \setlength{\glsdescwidth}{0.75\textwidth}
     \renewcommand*{\glsgroupskip}{}
 
-% Print the default glossary of abbreviations,
-% if necessary. Otherwise comment out.
-% The appropriate Finnish variant is 'Lyhenteet'
-    \printglossary[title={Lyhenteet ja merkinnät}]
+    % Print the default glossary of abbreviations,
+    % if necessary. Otherwise comment out.
+    % The appropriate Finnish variant is 'Lyhenteet'
+    \printglossary[title={Glossary}]
 
-% Print more than one glossary with these lines.
-% Otherwise comment out.
-% \printglossary[type=symbs]
-% \printglossary[type=label]
-% ...
+    % Print more than one glossary with these lines.
+    % Otherwise comment out.
+    % \printglossary[type=symbs]
+    % \printglossary[type=label]
+    % ...
 
+\fi
 %%%%% MAIN MATTER %%%%%
 
-    \mainmatter
-
-% Write each of the chapters of the thesis
-% into a separate file for the sake of clarity.
-% They can be \input as shown below. Give both
-% the chapters and their files as descriptive
-% names as possible.
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 
-    \chapter{Introduction}
-    \label{ch:introduction}
-    \input{tex/introduction}
+\chapter{Introduction}
+\label{ch:introduction}
+\input{tex/introduction}
 
 
-    \chapter{Writing style}
-    \label{ch:writing style}
-    \input{tex/writing-style}
+\chapter{Writing style}
+\label{ch:writing style}
+\input{tex/writing-style}
 
 
-    \chapter{Referencing styles}
-    \label{ch:referencing styles}
-    \input{tex/referencing-styles}
+\chapter{Referencing styles}
+\label{ch:referencing styles}
+\input{tex/referencing-styles}
 
-    \chapter{Conclusion}
-    \label{ch:conclusion}
-    \input{tex/conclusion}
+\chapter{Conclusion}
+\label{ch:conclusion}
+\input{tex/conclusion}
 
-%%%%% Bibliography/references.
 
-% Print the bibliography according to the
-% information in ./tex/references.bib and
-% the in-line citations used in the body of
-% the thesis.
-% \emergencystretch=2em
+\ifdraftmode\else
+    %%%%% Bibliography/references.
+
+    % Print the bibliography according to the
+    % information in ./tex/references.bib and
+    % the in-line citations used in the body of
+    % the thesis.
+    % \emergencystretch=2em
     \printbibliography[heading=bibintoc]
+\fi
 
 %%%%% Appendices.
 

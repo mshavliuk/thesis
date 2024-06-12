@@ -4,7 +4,8 @@ rm -rf compile
 mkdir -p compile
 
 if [ "$1" = "--fast" ]; then
-    pdflatex -output-directory=compile main.tex
+    pdflatex -output-directory=compile  "\\gdef\\draftmode{1} \\input{main.tex}"
+#    pdflatex -output-directory=compile  "\\input{main.tex}"
 else
     latexmk -pdf -outdir=compile main.tex
 fi
