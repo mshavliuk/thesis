@@ -32,7 +32,6 @@
 
 %%%%% CLASS OPTIONS %%%%%
 
-\newcommand{\@mainlanguage}{english}
 \newcommand{\@citationstyle}{numeric}
 \newcommand{\@citationsorting}{none}
 \newif\if@customcitation\@customcitationtrue
@@ -198,6 +197,7 @@
 \titlespacing{\subsubsection}{0em}{18pt}{12pt}
 \titlespacing{name=\subsubsection, numberless}{0em}{18pt}{12pt}
 
+\RequirePackage[main=english]{babel}
 \RequirePackage{csquotes}% TODO: figure out if this is necessary - said to be used for quoting
 
 % Powerful color package
