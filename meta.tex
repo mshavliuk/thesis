@@ -1,0 +1,33 @@
+\makeatletter
+\gdef\@author{Mikhail Shavliuk}
+\gdef\@keywords{Transformer, Biomarker}
+\gdef\@title{Development of a Transformer-based neural network for Biomarkers prediction}
+\gdef\@abstract{The abstract is a concise, self-containing one page description of the work: what was the problem, what was done, and what are the results. Do not include charts or tables in the abstract. Put the abstract in the primary language of your thesis first and then the translation when that is needed. International students do not need to include an abstract in Finnish.} % TODO: Add abstract
+\gdef\@university{Tampere University}
+
+
+% List of variables to define
+\gdef\@subtitle{Your Subtitle}
+\gdef\@thesistype{Master of Science Thesis}
+\gdef\@facultyname{Your Faculty Name}
+\gdef\@examiner{Examiner Name}
+\gdef\@finishyear{2024}
+\gdef\@finishmonth{06}
+\gdef\@finishday{11}
+\gdef\@programmename{Your Programme Name}
+
+
+
+\newwrite\file
+\immediate\openout\file=\jobname.xmpdata
+    \immediate\write\file{\string\Title{\@title}}
+    \immediate\write\file{\string\Author{\@author}}
+    \immediate\write\file{\string\Keywords{\@keywords}}
+    \immediate\write\file{\string\Language{en-US}}
+    \immediate\write\file{\string\Subject{\@abstract}}
+    \immediate\write\file{\string\PublicationType{book}}
+    \immediate\write\file{\string\Publisher{\@university}}
+    \immediate\write\file{\string\Date{\@finishyear-\@finishmonth-\@finishday}}
+\immediate\closeout\file
+
+\makeatother

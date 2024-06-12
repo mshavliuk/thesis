@@ -32,8 +32,7 @@
 
 %%%%% CLASS OPTIONS %%%%%
 
-\newcommand{\@mainlanguage}{finnish}
-\newcommand{\@otherlanguage}{english}
+\newcommand{\@mainlanguage}{english}
 \newcommand{\@citationstyle}{numeric}
 \newcommand{\@citationsorting}{none}
 \newif\if@customcitation\@customcitationtrue
@@ -42,18 +41,6 @@
 \newif\if@langenglish\@langenglishfalse
 \newif\if@taunotdraftmode\@taunotdraftmodetrue
 \newif\if@programs\@programsfalse
-
-% Language selection.
-\DeclareOption{english}{%
-    \@langenglishtrue
-    \renewcommand{\@mainlanguage}{english}
-    \renewcommand{\@otherlanguage}{finnish}
-}
-\DeclareOption{finnish}{%
-    \@langenglishfalse
-    \renewcommand{\@mainlanguage}{finnish}
-    \renewcommand{\@otherlanguage}{english}
-}
 
 % Citation style selection.
 \DeclareOption{numeric}{%
@@ -205,7 +192,7 @@
 \titlespacing{name=\subsubsection, numberless}{0em}{18pt}{12pt}
 
 % Language support for Finnish and English
-\RequirePackage[\@otherlanguage, main=\@mainlanguage]{babel}
+\RequirePackage[main=\@mainlanguage]{babel} % TODO: figure out if this is necessary
 \RequirePackage{csquotes}
 
 % Powerful color package
@@ -256,13 +243,6 @@
 % List of symbols and abbreviations
 \RequirePackage[automake, nonumberlist, nopostdot]{glossaries}
 
-\if@langenglish
-    \newcommand{\@glossaryname}{List of Symbols and Abbreviations}
-    \newcommand{\@appendixname}{Appendix}
-\else
-    \newcommand{\@glossaryname}{Lyhenteet ja merkinnät}
-    \newcommand{\@appendixname}{Liite}
-\fi
 
 \newlength\glsnamewidth
 \newglossarystyle{taulong}{%
@@ -302,7 +282,7 @@
     {\MakeUppercase{\appendixname~\thechapter:}}{\chapterspace}
     {\fancyhf{}\rhead{\thepage}\MakeUppercase{##1}}
 \titlecontents{chapter}[0pt]{}%
-    {\@appendixname~\thecontentslabel:~}{}{\titlerule*[1pc]{.}\contentspage}
+    {Appendix~\thecontentslabel:~}{}{\titlerule*[1pc]{.}\contentspage}
 }{}
 
 \if@langenglish
@@ -339,7 +319,7 @@
 \RequirePackage[accsupp]{axessibility}
 
 % Text hyperlinking
-\RequirePackage{hyperref}
+%\RequirePackage{hyperref}
 %\RequirePackage{url}
 \urlstyle{same}
 
@@ -349,109 +329,6 @@
 \newcommand{\xselectlanguage}[1]{%
   \begingroup\edef\x{\endgroup
     \noexpand\selectlanguage{#1}}\x
-}
-
-% \title command
-\renewcommand{\title}[2]{%
-    \gdef\@title{#1}
-    \gdef\@othertitle{#2}
-}
-\renewcommand{\@title}[1]{
-    \@latex@warning@no@line{No \noexpand\title given.}
-}
-\newcommand{\@othertitle}[1]{
-    \@latex@warning@no@line{No \noexpand\othertitle given.}
-}
-
-% \subtitle command
-\newcommand{\subtitle}[2]{%
-    \gdef\@subtitle{#1}
-    \gdef\@othersubtitle{#2}
-}
-\newcommand{\@subtitle}[1]{
-    \@latex@warning@no@line{No \noexpand\subtitle given.}
-}
-\newcommand{\@othersubtitle}[1]{
-    \@latex@warning@no@line{No \noexpand\othersubtitle given.}
-}
-
-% \thesistype command
-\newcommand{\thesistype}[2]{
-    \gdef\@thesistype{#1}
-    \gdef\@otherthesistype{#2}
-}
-\newcommand{\@thesistype}[1]{%
-    \@latex@warning@no@line{No \noexpand\thesistype given.}
-}
-\newcommand{\@otherthesistype}[1]{%
-    \@latex@warning@no@line{No \noexpand\otherthesistype given.}
-}
-
-% \facultyname command
-\newcommand{\facultyname}[2]{
-    \gdef\@facultyname{#1}
-    \gdef\@otherfacultyname{#2}
-}
-\newcommand{\@facultyname}[1]{
-    \@latex@warning@no@line{No \noexpand\facultyname given.}
-}
-\newcommand{\@otherfacultyname}[1]{
-    \@latex@warning@no@line{No \noexpand\otherfacultyname given.}
-}
-
-% \examiner command
-\if@langenglish
-    \newcommand{\@examinername}{Examiner}
-\else
-    \newcommand{\@examinername}{Tarkastaja}
-\fi
-
-\newcommand{\examiner}[2][\@examinername]{
-    \gdef\@finalexaminername{#1}
-    \gdef\@givenexaminer{#2}
-}
-\newcommand{\@examiner}[2]{
-    #1: #2
-}
-
-% \finishdate command
-\newcommand{\finishdate}[3]{
-    \gdef\@finishyear{#1}
-    \gdef\@finishmonth{#2}
-    \gdef\@finishday{#3}
-}
-\newcommand{\@finishyear}[1]{
-    \@latex@warning@no@line{No \noexpand\finishyear given.}
-}
-\newcommand{\@finishmonth}[1]{
-    \@latex@warning@no@line{No \noexpand\finishmonth given.}
-}
-\newcommand{\@finishday}[1]{
-    \@latex@warning@no@line{No \noexpand\finishday given.}
-}
-
-% \programmename command
-\newcommand{\programmename}[2]{
-    \gdef\@programmename{#1}
-    \gdef\@otherprogrammename{#2}
-}
-\newcommand{\@programmename}[1]{
-    \@latex@warning@no@line{No \noexpand\programmename given.}
-}
-\newcommand{\@otherprogrammename}[1]{
-    \@latex@warning@no@line{No \noexpand\otherprogrammename given.}
-}
-
-% \keywords command
-\newcommand{\keywords}[2]{
-    \gdef\@keywords{#1}
-    \gdef\@otherkeywords{#2}
-}
-\newcommand{\@keywords}[1]{
-    \@latex@warning@no@line{No \noexpand\keywords given.}
-}
-\newcommand{\@otherkeywords}[1]{
-    \@latex@warning@no@line{No \noexpand\otherkeywords given.}
 }
 
 % \frontmatter command
@@ -468,43 +345,10 @@
     \setcounter{page}{1}
 }
 
-% Originality texts
-\newcommand{\@finoriginalitytext}{%
-Tämän julkaisun alkuperäisyys on tarkastettu Turnitin OriginalityCheck -ohjelmalla.
-}
-\newcommand{\@engoriginalitytext}{%
-The originality of this thesis has been checked using the Turnitin OriginalityCheck service.
-}
-
-% Terminology settings
-\if@langenglish
-    \newcommand{\@abstractname}{Abstract}
-    \newcommand{\@otherabstractname}{Tiivistelmä}
-    \newcommand{\@university}{Tampere University}
-    \newcommand{\@otheruniversity}{Tampereen yliopisto}
-    \newcommand{\@keywordname}{Keywords}
-    \newcommand{\@otherkeywordname}{Avainsanat}
-    \newcommand{\@prefacename}{Preface}
-    \newcommand{\@originalitytext}{\@engoriginalitytext}
-    \newcommand{\@otheroriginalitytext}{\@finoriginalitytext}
-    \newcommand{\@logofile}{figures/tau-logo-eng.eps}
-\else
-    \newcommand{\@abstractname}{Tiivistelmä}
-    \newcommand{\@otherabstractname}{Abstract}
-    \newcommand{\@university}{Tampereen yliopisto}
-    \newcommand{\@otheruniversity}{Tampere University}
-    \newcommand{\@keywordname}{Avainsanat}
-    \newcommand{\@otherkeywordname}{Keywords}
-    \newcommand{\@prefacename}{Alkusanat}
-    \newcommand{\@originalitytext}{\@finoriginalitytext}
-    \newcommand{\@otheroriginalitytext}{\@engoriginalitytext}
-    \newcommand{\@logofile}{figures/tau-logo-fin.eps}
-\fi
-
 % Make the title
 \renewcommand\maketitle{
     \thispagestyle{empty}
-    \vspace*{-1.88cm}\hspace*{-2.7cm}\includegraphics[height=2.07cm]{\@logofile}
+    \vspace*{-1.88cm}\hspace*{-2.7cm}\includegraphics[height=2.07cm]{figures/tau-logo-eng.eps}
     \par\medskip
     \vspace{102pt}
     {\raggedleft\Large\@author\par}
@@ -517,7 +361,7 @@ The originality of this thesis has been checked using the Turnitin OriginalityCh
     {\raggedleft%
         \@thesistype\\%
         \@facultyname\\%
-        \@examiner{\@finalexaminername}{\@givenexaminer}\\%
+        Examiner: \@examiner\\%
         \DTMDisplaydate%
             {\@finishyear}%
             {\@finishmonth}%
@@ -530,7 +374,7 @@ The originality of this thesis has been checked using the Turnitin OriginalityCh
 % Make the abstracts
 \renewcommand{\abstract}[1]{
     \clearpage
-    \chapter*{\abstractname}
+    \chapter*{Abstract}
     \begin{spacing}{1.000}
     {\small
         \setlength{\parindent}{15pt}
@@ -545,51 +389,24 @@ The originality of this thesis has been checked using the Turnitin OriginalityCh
             {\@finishday}{-1}\par
         \noindent\hrulefill\par
         \vspace{0.5\baselineskip}
-        \input{#1}\par
+        \@abstract\par
         \bigskip
-        \noindent\@keywordname: \@keywords\par
+        \noindent Keywords: \@keywords\par
         \bigskip
-        \noindent\@originalitytext
+        \noindent The originality of this thesis has been checked using the Turnitin OriginalityCheck service.
     \par}
     \end{spacing}
     \clearpage
-}
-\newcommand{\otherabstract}[1]{
-    \clearpage
-    \xselectlanguage{\@otherlanguage}
-    \chapter*{\@otherabstractname}
-    \begin{spacing}{1.000}
-    {\small
-        \setlength{\parindent}{15pt}
-        \setlength{\parskip}{0pt}
-        \noindent\@author: \@othertitle\par
-        \noindent\@otherthesistype\par
-        \noindent\@otheruniversity\par
-        \noindent\@otherprogrammename\par
-        \noindent\DTMDisplaydate%
-            {\@finishyear}%
-            {\@finishmonth}%
-            {\@finishday}{-1}\par
-        \noindent\hrulefill\par
-        \vspace{0.5\baselineskip}
-        \input{#1}\par
-        \bigskip
-        \noindent\@otherkeywordname: \@otherkeywords\par
-        \bigskip
-        \noindent\@otheroriginalitytext
-    \par}
-    \end{spacing}
-    \xselectlanguage{\@mainlanguage}
 }
 
+
 % Make the preface
-\newcommand{\preface}[2]{
+\newcommand{\preface}[1]{
     \clearpage
-    \chapter*{\@prefacename}
+    \chapter*{Preface}
     \noindent\input{#1}\par
     \bigskip
-    \DTMlangsetup[en-GB,finnish]{showdayofmonth=true}
-    \noindent#2,
+    \DTMlangsetup[en-GB]{showdayofmonth=true}
     \DTMdisplaydate%
         {\@finishyear}%
         {\@finishmonth}%

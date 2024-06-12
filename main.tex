@@ -29,16 +29,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
-%%%%% METADATA %%%%%
-\begin{filecontents*}[overwrite]{\jobname.xmpdata}
-\Title{Title}
-\Author{Mikhail Shavliuk}
-\Language{en-US}
-\end{filecontents*}
+\input{meta.tex}
 
 \pdfminorversion=6
-
 %%%%% PREAMBLE %%%%%
 
 %%%%% Document class declaration.
@@ -54,7 +47,14 @@
 %   programs - if you wish to display code snippets
 % Example: \documentclass[english, authoryear]{tauthesis}
 %          thesis in English with author-year citations
-\documentclass[english, authoryear]{tauthesis}
+\documentclass[ieee]{tauthesis}
+
+
+\usepackage{siunitx, mhchem, chemfig}
+% siunitx: SI units
+% mhchem: Chemical formulas
+% chemfig: Chemical structures
+
 
 % The glossaries package throws a warning:
 % No language module detected for 'finnish'.
@@ -132,11 +132,16 @@
 % \newglossary{label}{Displayed name}
 % ...
 
+
+%Tools like makeglossaries, bibtex, or biber read these auxiliary files and generate additional
+%files (.gls for glossaries, .bbl for bibliographies) that LaTeX will incorporate into the document.
+
 \makeglossaries
 
 % Use this line if using the default glossary.
 % Otherwise comment out.
-\loadglsentries[main]{tex/sanasto.tex}
+\loadglsentries[main]{tex/glossary}
+
 
 % Use this line if using more than one glossary.
 % Otherwise comment out.
@@ -188,7 +193,7 @@
 
 %%%%% FRONT MATTER %%%%%
 
-\frontmatter
+    \frontmatter
 
 %%%%% Thesis information and title page.
 
@@ -197,11 +202,7 @@
 % the primary language as the first argument
 % and its translation to the secondary language
 % as the second.
-\title{Kuvaava otsikko}{A Descriptive Title}
-\subtitle{Tarkentava alaotsikko}{A Specifying Subtitle}
 
-% The author name.
-\author{Etunimi Sukunimi}
 
 % The examiner information.
 % If your work has multiple examiners, replace with
@@ -210,30 +211,22 @@
 % e.g. Examiners or Tarkastajat, and <name>s are
 % replaced by the examiner names, each on their
 % separate line.
-\examiner[Tarkastajat]{Prof. Proffa Proffanen}
 
 
 % The finishing date of the thesis (YYYY-MM-DD).
-\finishdate{2021}{06}{24}
 
 % The type of the thesis (e.g. Kandidaatintyö
 % or Master of Science Thesis) in the primary
 % and the secondary languages of the thesis.
-\thesistype{Opinnäytetyön taso}{Thesis type}
 
 % The faculty and degree programme names in
 % the primary and the secondary languages of
 % the thesis.
-\facultyname{Tiedekunnan nimi}{Faculty Name}
-\programmename{Tutkinto-ohjelma}{Degree Programme}
 
 % The keywords to the thesis in the primary and
 % the secondary languages of the thesis
-\keywords%
-    {avainsana, avainsana, avainsana, avainsana, avainsana}
-    {keyword, keyword, keyword, keyword, keyword}
 
-\maketitle
+    \maketitle
 
 %%%%% Abstracts and preface.
 
@@ -247,13 +240,12 @@
 % first abstract. The second argument of
 % the \preface command takes the place where
 % the thesis was signed in.
-\abstract{tex/tiivistelma.tex}
-\otherabstract{tex/abstract.tex}
-\preface{tex/alkusanat.tex}{Tampereella}
+    \abstract{tex/abstract.tex}
+    \preface{tex/preface.tex}{Tampereella}
 
 %%%%% Table of contents.
 
-\tableofcontents
+    \tableofcontents
 
 %%%%% Lists of figures, tables, listings and terms.
 
@@ -268,16 +260,16 @@
 
 % Misc stuff related to how the glossary is displayed.
 % You can especially tweak the lengths to suit you!
-\glsaddall
-\setglossarystyle{taulong}
-\setlength{\glsnamewidth}{0.25\textwidth}
-\setlength{\glsdescwidth}{0.75\textwidth}
-\renewcommand*{\glsgroupskip}{}
+    \glsaddall
+    \setglossarystyle{taulong}
+    \setlength{\glsnamewidth}{0.25\textwidth}
+    \setlength{\glsdescwidth}{0.75\textwidth}
+    \renewcommand*{\glsgroupskip}{}
 
 % Print the default glossary of abbreviations,
 % if necessary. Otherwise comment out.
 % The appropriate Finnish variant is 'Lyhenteet'
-\printglossary[title={Lyhenteet ja merkinnät}]
+    \printglossary[title={Lyhenteet ja merkinnät}]
 
 % Print more than one glossary with these lines.
 % Otherwise comment out.
@@ -287,31 +279,32 @@
 
 %%%%% MAIN MATTER %%%%%
 
-\mainmatter
+    \mainmatter
 
 % Write each of the chapters of the thesis
 % into a separate file for the sake of clarity.
 % They can be \input as shown below. Give both
 % the chapters and their files as descriptive
 % names as possible.
-\chapter{Johdanto}
-\label{ch:johdanto}
 
-\input{tex/johdanto.tex}
 
-\chapter{Esitystyyli}
-\label{ch:esitystyyli}
-\input{tex/esitystyyli.tex}
+    \chapter{Introduction}
+    \label{ch:introduction}
+    \input{tex/introduction}
 
-\chapter{Viittaustekniikat}
-\label{ch:viittaustekniikat}
-\input{tex/viittaustekniikat.tex}
 
-% Add chapters similarly.
+    \chapter{Writing style}
+    \label{ch:writing style}
+    \input{tex/writing-style}
 
-\chapter{Yhteenveto}
-\label{ch:yhteenveto}
-\input{tex/yhteenveto.tex}
+
+    \chapter{Referencing styles}
+    \label{ch:referencing styles}
+    \input{tex/referencing-styles}
+
+    \chapter{Conclusion}
+    \label{ch:conclusion}
+    \input{tex/conclusion}
 
 %%%%% Bibliography/references.
 
@@ -320,7 +313,7 @@
 % the in-line citations used in the body of
 % the thesis.
 % \emergencystretch=2em
-\printbibliography[heading=bibintoc]
+    \printbibliography[heading=bibintoc]
 
 %%%%% Appendices.
 
@@ -328,12 +321,12 @@
 % the document. Remember to introduce each
 % appendix and its content.
 
-\begin{appendices}
+    \begin{appendices}
 
-\chapter{Esimerkkiliite}
-\label{ch:liite}
-\input{./tex/liite.tex}
+        \chapter{Sample attachment}
+        \label{ch:appendix}
+        \input{./tex/appendix}
 
-\end{appendices}
+    \end{appendices}
 
 \end{document}
