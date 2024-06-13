@@ -1,13 +1,18 @@
 \makeatletter
+
 \gdef\@author{Mikhail Shavliuk}
 \gdef\@keywords{Transformer, Biomarker}
-\gdef\@title{Development of a Transformer-based neural network for Biomarkers prediction}
-\gdef\@abstract{The abstract is a concise, self-containing one page description of the work: what was the problem, what was done, and what are the results. Do not include charts or tables in the abstract. Put the abstract in the primary language of your thesis first and then the translation when that is needed. International students do not need to include an abstract in Finnish.} % TODO: Add abstract
+\gdef\@title{Transformer neural network for Biomarkers prediction}
+\gdef\@subtitle{Temporal Transformer Regression with longitudinal EHR data}
+ % TODO: Add abstract
+\edef\@abstract{Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut,
+placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero,
+nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque.
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna
+fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat.}
 \gdef\@university{Tampere University}
 
-
-% List of variables to define
-\gdef\@subtitle{Your Subtitle}
 \gdef\@thesistype{Master of Science Thesis}
 \gdef\@facultyname{Your Faculty Name}
 \gdef\@examiner{Examiner Name}
@@ -25,7 +30,7 @@
     \immediate\write\file{\string\Keywords{\@keywords}}
     \immediate\write\file{\string\Language{en-US}}
     \immediate\write\file{\string\Subject{\@abstract}}
-    \immediate\write\file{\string\PublicationType{book}}
+    \immediate\write\file{\string\PublicationType{thesis}}
     \immediate\write\file{\string\Publisher{\@university}}
     \immediate\write\file{\string\Date{\@finishyear-\@finishmonth-\@finishday}}
 \immediate\closeout\file

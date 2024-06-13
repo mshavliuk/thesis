@@ -1,72 +1,22 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Congratulations, you've made an excellent choice
-%% of writing your Tampere University thesis using
-%% the LaTeX system. This document attempts to be
-%% as complete a template as possible to let you focus
-%% on the most important part: the writing itself.
-%% Thus the details regarding the visual appearance
-%% and even structure have already been worked out
-%% for you!
-%%
-%% I sincerely hope you will find this template useful
-%% in completing your thesis project. I've tried to
-%% add comments (followed by the % sign) to clarify
-%% the structure and purpose of some of the commands.
-%% Most of the magic happens in the file tauthesis.cls,
-%% which you are more than welcome to take a look at.
-%% Just refrain from editing it in the most crucial
-%% versions of the thesis!
-%%
-%% I wish you and your thesis project the best of luck!
-%% If this template causes you trouble along the way
-%% or if you've any suggestions for improving it,
-%% please be in contact through GitHub
-%% (<URL HERE>)
-%%
-%% Yours,
-%%
-%% Ville Koljonen
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\pdfminorversion=7
 
 \input{meta.tex}
 
-\pdfminorversion=6
-%%%%% PREAMBLE %%%%%
-
-%%%%% Document class declaration.
-% The possible optional arguments are
-%   finnish - thesis in Finnish (default)
-%   english - thesis in English
-%   numeric - citations in numeric style (default)
-%   authoryear - citations in author-year style
-%   apa - citations in APA 7 (available only in English)
-%   ieee - citations in IEEE style (available only in English)
-%   draft - for faster non-final works, also skips images
-%           (recommended, remove in final version)
-%   programs - if you wish to display code snippets
-% Example: \documentclass[english, authoryear]{tauthesis}
-%          thesis in English with author-year citations
 \documentclass[ieee]{tauthesis}
-
 
 \usepackage{siunitx, mhchem, chemfig}
 % siunitx: SI units
 % mhchem: Chemical formulas
 % chemfig: Chemical structures
 
+% these two commands are taken from How to create a PDF/A file with LATEX guide
 
-% The glossaries package throws a warning:
-% No language module detected for 'finnish'.
-% You can safely ignore this. All other
-% warnings should be taken care of!
+\hypersetup{pdfstartview=}
 
-%%%%% Your packages.
-% Before adding packages, see if they can be found
-% in tauthesis.cls already. If you're not sure that
-% you need a certain package, don't include it in
-% the document! This can dramatically reduce
-% compilation time.
+
+% TODO: check if this is a good package or not, recommended by Dr. Trefor Bazett
+%\usepackage{cleveref}
+% Syntax: \cref{label} to reference a \label for a figure, table, etc.
 
 % Graphs
 % \usepackage{pgfplots}
@@ -79,22 +29,10 @@
 \usepackage{amsmath, amssymb, amsthm}
 %\usepackage{bm}
 
-% Chemistry packages
-% \usepackage{chemfig}
-% \usepackage[version=4]{mhchem}
-
-% Text hyperlinking
-% \usepackage{hyperref}
-% \hypersetup{hidelinks}
-
-% (SI) unit handling
-% \usepackage{siunitx}
-
 %\sisetup{
 %    detect-all,
 %    math-sf=\mathrm,
 %    exponent-product=\cdot,
-%    output-decimal-marker={,} % for theses in FINNISH!
 %}
 
 %%%%% Your commands.
@@ -124,28 +62,8 @@
 
 %%%%% Glossary information.
 
-% Use the following lines ONLY if you need more
-% than one glossary. The first argument specifies
-% a type label for the glossary and the second
-% the displayed name.
-% \newglossary*{symbs}{Symbols}
-% \newglossary{label}{Displayed name}
-% ...
-
-
-%Tools like makeglossaries, bibtex, or biber read these auxiliary files and generate additional
-%files (.gls for glossaries, .bbl for bibliographies) that LaTeX will incorporate into the document.
-
 \makeglossaries
-
-% Use this line if using the default glossary.
-% Otherwise comment out.
 \loadglsentries[main]{tex/glossary}
-
-
-% Use this line if using more than one glossary.
-% Otherwise comment out.
-% \loadglsentries[symbs]{tex/sanasto2.tex}
 
 %%%%% Citation information.
 
@@ -192,59 +110,18 @@
 \begin{document}
 
 %%%%% FRONT MATTER %%%%%
-
 \clearpage
 \pagenumbering{roman}
 \setcounter{page}{0}
 
-%%%%% Thesis information and title page.
-
-% The titles of the work. If there is no subtitle,
-% leave the arguments empty. Pass the title in
-% the primary language as the first argument
-% and its translation to the secondary language
-% as the second.
-
-
-% The examiner information.
-% If your work has multiple examiners, replace with
-% \examiner[<label>]{<name> \\ <name>}
-% where <label> is an appropriate (plural) label,
-% e.g. Examiners or Tarkastajat, and <name>s are
-% replaced by the examiner names, each on their
-% separate line.
-
-
-% The finishing date of the thesis (YYYY-MM-DD).
-
-% The type of the thesis (e.g. Kandidaatintyö
-% or Master of Science Thesis) in the primary
-% and the secondary languages of the thesis.
-
-% The faculty and degree programme names in
-% the primary and the secondary languages of
-% the thesis.
-
-% The keywords to the thesis in the primary and
-% the secondary languages of the thesis
 
 \maketitle
 
 %%%%% Abstracts and preface.
 
-% Write the abstract(s) and the preface
-% into a separate file for the sake of clarity.
-% Pass the appropriate file name as the first
-% argument to these commands. Put the \abstract
-% in the primary language first and the
-% \otherabstract in the secondary language second.
-% Those who do not speak Finnish only need the
-% first abstract. The second argument of
-% the \preface command takes the place where
-% the thesis was signed in.
 \ifdraftmode\else
     \abstract{tex/abstract.tex}
-    \preface{tex/preface.tex}q
+    \preface{tex/preface.tex}
     %%%%% Table of contents.
     \tableofcontents
 
@@ -277,8 +154,9 @@
     % \printglossary[type=symbs]
     % \printglossary[type=label]
     % ...
-
 \fi
+
+
 %%%%% MAIN MATTER %%%%%
 
 \clearpage
@@ -318,16 +196,12 @@
 
 %%%%% Appendices.
 
-% Use only if it clarifies the structure of
-% the document. Remember to introduce each
-% appendix and its content.
+\begin{appendices}
 
-    \begin{appendices}
+    \chapter{Sample attachment}
+    \label{ch:appendix}
+    \input{./tex/appendix}
 
-        \chapter{Sample attachment}
-        \label{ch:appendix}
-        \input{./tex/appendix}
-
-    \end{appendices}
+\end{appendices}
 
 \end{document}

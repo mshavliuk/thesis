@@ -38,7 +38,6 @@
 \newif\if@apacitation\@apacitationfalse
 
 \newif\if@langenglish\@langenglishfalse
-\newif\if@programs\@programsfalse
 
 % Citation style selection.
 \DeclareOption{numeric}{%
@@ -59,10 +58,6 @@
     \@customcitationfalse
 }
 
-%\ifdefined\@draftmode
-%\else
-%    \gdef \@draftmode{false}
-%\fi
 
 % Define a conditional flag
 \newif\ifdraftmode
@@ -74,25 +69,20 @@
   \draftmodefalse
 \fi
 
-% Programs to list?
-\DeclareOption{programs}{%
-    \@programstrue
-}
-
 \DeclareOption*{
   \ClassWarning{tauthesis}{Unknown option '\CurrentOption'}
 }
-
-% Default options.
-\ExecuteOptions{finnish,numeric}
 
 \ProcessOptions\relax
 
 %%%%% PACKAGES AND RELATED DEFINITIONS %%%%%
 
-% ISO-19005 compliant document (pdf/A-2b)
-\RequirePackage[a-3a,mathxmp]{pdfx}[2018/12/22]
+% \RequirePackage{colorprofiles} % said to be needed once to install the package
+
+\RequirePackage[a-3a]{pdfx}
 \catcode30=12
+% The pdfx package loads hyperref and xcolor packages, so you don’t have to call these explicitly.
+
 
 % UTF-8 input
 \RequirePackage[utf8]{inputenc}
@@ -109,7 +99,7 @@
     left=4cm,
     right=2cm]{geometry}
 \special{papersize={210mm,297mm}}
-\RequirePackage{fancyhdr}
+\RequirePackage{fancyhdr} % Custom headers and footers
 \RequirePackage[explicit]{titlesec}
 \RequirePackage{setspace}
 \RequirePackage{parskip}
@@ -131,10 +121,12 @@
 \renewcommand{\floatpagefraction}{0.75}
 
 % Define the header and footer content.
-
-\pagestyle{fancyplain}
+\pagestyle{fancy}
 \fancyhf{}
-\rhead{\thepage}
+\fancyhead[R]{\thepage}
+\fancyhead[L]{\itshape \rightmark}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 
@@ -238,14 +230,17 @@
 \renewcommand{\arraystretch}{1.25}
 
 % Code listing handling
-\if@programs
-    \RequirePackage{listings}
-    % textcl=true courtesy of Mika Kuitula
-    \lstset{texcl=true, captionpos=b, commentstyle=\tt}
-\fi
+\RequirePackage{listings}
+\lstset{texcl=true, captionpos=b, commentstyle=\tt}
+
+
+\RequirePackage{fancyvrb}
+% fancyvrb: Verbatim text, code blocks
+ % TODO: DECIDE which package to use (fancyvrb or listings)
+
 
 % List of symbols and abbreviations
-\RequirePackage[automake, nonumberlist, nopostdot]{glossaries}
+\RequirePackage[automake=immediate, nonumberlist, nopostdot]{glossaries}
 
 
 \newlength\glsnamewidth
@@ -298,10 +293,10 @@
 \RequirePackage{pdfcomment}
 
 % Automated math alt texts.
-\RequirePackage[accsupp]{axessibility}
+%\RequirePackage[accsupp]{axessibility}
+% it breaks the compilation by trying to change the pdf minorversion
 
 % Text hyperlinking
-%\RequirePackage{hyperref}
 %\RequirePackage{url}
 \urlstyle{same}
 
