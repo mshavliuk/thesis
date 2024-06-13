@@ -4,15 +4,6 @@
 
 \documentclass[ieee]{tauthesis}
 
-\usepackage{siunitx, mhchem, chemfig}
-% siunitx: SI units
-% mhchem: Chemical formulas
-% chemfig: Chemical structures
-
-% these two commands are taken from How to create a PDF/A file with LATEX guide
-
-\hypersetup{pdfstartview=}
-
 
 % TODO: check if this is a good package or not, recommended by Dr. Trefor Bazett
 %\usepackage{cleveref}
@@ -40,72 +31,15 @@
 % Print verbatim LaTeX commands
 \newcommand{\verbcommand}[1]{\texttt{\textbackslash #1}}
 
-% Basic theorems in Finnish and in English.
-% Remove [chapter] if you wish a simply
-% running enumeration.
-% \newtheorem{lause}{Lause}[chapter]
-% \newtheorem{theorem}[lause]{Theorem}
 
-% \newtheorem{apulause}[lause]{Apulause}
-% \newtheorem{lemma}[lause]{Lemma}
+%%%%% Glossary and Bibleography
 
-% Use these versions for individually
-% enumerated lemmas
-% \newtheorem{apulause}{Apulause}[chapter]
-% \newtheorem{lemma}{Lemma}[chapter]
+\ifdraftmode\else
+    \makeglossaries
+    \loadglsentries[main]{./tex/glossary.tex}
 
-% Definition style
-% \theoremstyle{definition}
-% \newtheorem{maaritelma}{Määritelmä}[chapter]
-% \newtheorem{definition}[maaritelma]{Definition}
-% examples in this style
-
-%%%%% Glossary information.
-
-\makeglossaries
-\loadglsentries[main]{tex/glossary}
-
-%%%%% Citation information.
-
-% Commonly used bibliography modifications.
-% Feel free to play around with them.
-
-%\ExecuteBibliographyOptions{%
-%sorting=none,
-%maxbibnames=99,
-%maxcitenames=2,
-%giveninits=true,
-%uniquename=init,
-%sortcites,
-%sortlocale=fin}
-
-%\DefineBibliographyStrings{finnish}{%
-%    in = {},
-%    pages = {s.},
-%    page = {s.}
-%}
-%\DefineBibliographyStrings{english}{%
-%    in = {},
-%    pages = {pp.},
-%    page = {p.}
-%}
-%
-%\DeclareNameAlias{sortname}{last-first}
-%\DeclareNameAlias{author}{last-first}
-
-%\DeclareFieldFormat[%
-%    article,inbook,incollection,inproceedings,
-%    patent,thesis,unpublished]{citetitle}{#1\isdot}
-%\DeclareFieldFormat[%
-%    article,inbook,incollection,inproceedings,
-%    patent,thesis,unpublished]{title}{#1\isdot}
-%\DeclareFieldFormat{pagetotal}{#1 \bibstring{page}}
-
-%\AtBeginBibliography{\renewcommand*{\makelabel}[1]{#1\hss}}
-
-%\DefineBibliographyExtras{english}{\let\finalandcomma=\empty}
-
-\addbibresource{tex/references.bib}
+    \addbibresource{tex/references.bib}
+\fi
 
 \begin{document}
 
@@ -122,38 +56,18 @@
 \ifdraftmode\else
     \abstract{tex/abstract.tex}
     \preface{tex/preface.tex}
+
     %%%%% Table of contents.
     \tableofcontents
 
-    %%%%% Lists of figures, tables, listings and terms.
-
-    % Print the lists of figures and/or tables.
-    % Uncomment either of these commands as required.
-    % Both are optional, but if there are many important
-    % figures/tables, listing them may be a good idea.
-
-    % \listoffigures
-    % \listoftables
-    % \lstlistoflistings
-
     % Misc stuff related to how the glossary is displayed.
-    % You can especially tweak the lengths to suit you!
     \glsaddall
     \setglossarystyle{taulong}
     \setlength{\glsnamewidth}{0.25\textwidth}
     \setlength{\glsdescwidth}{0.75\textwidth}
     \renewcommand*{\glsgroupskip}{}
 
-    % Print the default glossary of abbreviations,
-    % if necessary. Otherwise comment out.
-    % The appropriate Finnish variant is 'Lyhenteet'
     \printglossary[title={Glossary}]
-
-    % Print more than one glossary with these lines.
-    % Otherwise comment out.
-    % \printglossary[type=symbs]
-    % \printglossary[type=label]
-    % ...
 \fi
 
 
@@ -169,15 +83,6 @@
 \input{tex/introduction}
 
 
-\chapter{Writing style}
-\label{ch:writing style}
-\input{tex/writing-style}
-
-
-\chapter{Referencing styles}
-\label{ch:referencing styles}
-\input{tex/referencing-styles}
-
 \chapter{Conclusion}
 \label{ch:conclusion}
 \input{tex/conclusion}
@@ -185,12 +90,6 @@
 
 \ifdraftmode\else
     %%%%% Bibliography/references.
-
-    % Print the bibliography according to the
-    % information in ./tex/references.bib and
-    % the in-line citations used in the body of
-    % the thesis.
-    % \emergencystretch=2em
     \printbibliography[heading=bibintoc]
 \fi
 

@@ -1,23 +1,3 @@
-%% tauthesis.cls
-%% Copyright 2018 Tampere University
-%
-% This work may be distributed and/or modified
-% under the conditions of the LaTeX Project Public
-% License, either version 1.3 of this license or
-% (at your option) any later version.
-%
-% The latest version of this license is in
-%   http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of LaTeX
-% version 2005/12/01 or later.
-%
-% This work has the LPPL maintenance status `maintained'.
-% 
-% The Current Maintainer of this work is
-%   Ville Koljonen (ville.koljonen (at) tuni.fi)
-%
-% This work consists of the files tauthesis.cls.
-
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{tauthesis}
 [2021/06/24 v2.0 Thesis styles used in Tampere University]
@@ -31,33 +11,7 @@
 \makeatletter
 
 %%%%% CLASS OPTIONS %%%%%
-
-\newcommand{\@citationstyle}{numeric}
-\newcommand{\@citationsorting}{none}
-\newif\if@customcitation\@customcitationtrue
-\newif\if@apacitation\@apacitationfalse
-
-\newif\if@langenglish\@langenglishfalse
-
-% Citation style selection.
-\DeclareOption{numeric}{%
-    \renewcommand{\@citationstyle}{numeric}
-}
-\DeclareOption{authoryear}{%
-    \renewcommand{\@citationstyle}{authoryear}
-    \renewcommand{\@citationsorting}{nyt}
-}
-\DeclareOption{apa}{%
-    \renewcommand{\@citationstyle}{apa}
-    \renewcommand{\@citationsorting}{nyt}
-    \@customcitationfalse
-    \@apacitationtrue
-}
-\DeclareOption{ieee}{%
-    \renewcommand{\@citationstyle}{ieee}
-    \@customcitationfalse
-}
-
+\newcommand{\@citationstyle}{ieee}
 
 % Define a conditional flag
 \newif\ifdraftmode
@@ -88,8 +42,7 @@
 \RequirePackage[utf8]{inputenc}
 
 % Arial-like font selection
-\RequirePackage[scaled=0.91]{helvet}
-\RequirePackage[T1]{fontenc}
+\RequirePackage[scaled=0.91]{helvet} % the scale factor said to be somehow related to math font size
 \renewcommand*\familydefault{\sfdefault}
 
 % Page geometry and heading handling
@@ -104,6 +57,7 @@
 \RequirePackage{setspace}
 \RequirePackage{parskip}
 
+%%%%%%%%% Spacings %%%%%%%%%
 \spacing{1.213}
 \setlength{\headheight}{14.5pt}
 
@@ -112,87 +66,13 @@
 \newlength\chapterindent
 \setlength\chapterindent{0.5in}
 
-% Try to prevent large figures appearing
-% by themselves without any text. Be
-% careful not to make \floatpagefraction
-% larger than \topfraction.
-\renewcommand{\topfraction}{0.85}        % default 0.7
-\renewcommand{\textfraction}{0.1}        % default 0.2
-\renewcommand{\floatpagefraction}{0.75}
 
-% Define the header and footer content.
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[R]{\thepage}
-\fancyhead[L]{\itshape \rightmark}
-\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
-
-% Define chapter and section heading styles.
-
-\setcounter{secnumdepth}{2}
-\setcounter{tocdepth}{2}
-
-% Chapter
-\titleformat
-    {\chapter}[block]{\raggedright\bf\Large%
-    \parshape %
-    2 %
-    0pt \linewidth %
-    \chapterindent \dimexpr\linewidth-\chapterindent}
-    {\makebox[\chapterindent][l]{\thechapter.}}{0em}
-    {\fancyhf{}\rhead{\thepage}\MakeUppercase{#1}}
-\titleformat
-    {name=\chapter, numberless}
-    {\raggedright\bf\Large}{}{0em}
-    {\fancyhf{}\rhead{\thepage}\MakeUppercase{#1}}
-\titlespacing{\chapter}{0em}{42pt}{42pt}
-\titlespacing{name=\chapter, numberless}{0em}{18pt}{18pt}
-
-% Section
-\titleformat
-    {\section}[block]{\raggedright\bf\large%
-    \parshape %
-    2 %
-    0pt \linewidth %
-    \chapterindent \dimexpr\linewidth-\chapterindent}
-    {\makebox[\chapterindent][l]{\thesection}}{0em}{#1}
-\titleformat
-    {name=\section, numberless}
-    {\raggedright\bf\large}{}{0em}{#1}
-\titlespacing{\section}{0em}{18pt}{12pt}
-\titlespacing{name=\section, numberless}{0em}{18pt}{12pt}
-
-% Subsection
-\titleformat
-    {\subsection}[block]{\raggedright\bf\large%
-    \parshape %
-    2 %
-    0pt \linewidth %
-    \chapterindent \dimexpr\linewidth-\chapterindent}
-    {\makebox[\chapterindent][l]{\thesubsection}}{0em}{#1}
-\titleformat
-    {name=\subsection, numberless}
-    {\raggedright\bf\large}{}{0em}{#1}
-\titlespacing{\subsection}{0em}{18pt}{12pt}
-\titlespacing{name=\subsection, numberless}{0em}{18pt}{12pt}
-
-% Subsubsection
-%\titleformat
-%    {\subsubsection}{\raggedright\bf\normalsize}
-%    {\thesubsubsection}{\chapterspace}{#1}
-\titleformat
-    {name=\subsubsection, numberless}
-    {\raggedright\bf\normalsize}{}{0em}{#1}
-\titlespacing{\subsubsection}{0em}{18pt}{12pt}
-\titlespacing{name=\subsubsection, numberless}{0em}{18pt}{12pt}
 
 \RequirePackage[UKenglish]{babel}
 \RequirePackage{csquotes}% TODO: figure out if this is necessary - said to be used for quoting
 
-% Powerful color package
+
 \RequirePackage{xcolor}
 \definecolor{taupurple}{RGB}{78,0,148}
 
@@ -200,26 +80,6 @@
 \RequirePackage[en-GB]{datetime2}
 \DTMlangsetup[en-GB]{showdayofmonth=false}
 
-% Smart bibliography handling
-\RequirePackage
-    [backend=biber,
-    autolang=other,
-    citestyle=\@citationstyle,
-    bibstyle=\@citationstyle]{biblatex}
-
-\DefineBibliographyStrings{english}{%
-    bibliography = {References},
-    references = {References}
-}
-
-\if@apacitation
-    \DeclareLanguageMapping{english}{english-apa}
-\fi
-
-% Graphics inclusion and drawing
-\ifdraftmode
-  \PassOptionsToPackage{draft}{graphicx}
-\fi
 \RequirePackage{graphicx}
 
 % Caption formatting
@@ -238,50 +98,166 @@
 % fancyvrb: Verbatim text, code blocks
  % TODO: DECIDE which package to use (fancyvrb or listings)
 
+\RequirePackage{titletoc}
 
-% List of symbols and abbreviations
-\RequirePackage[automake=immediate, nonumberlist, nopostdot]{glossaries}
+\ifdraftmode\else
+    % List of symbols and abbreviations
+    \RequirePackage[automake=immediate, nonumberlist, nopostdot]{glossaries}
 
 
-\newlength\glsnamewidth
-\newglossarystyle{taulong}{%
-    \setglossarystyle{long}%
-    \renewenvironment{theglossary}{%
-      \tablehead{}%
-      \tabletail{}%
-      \begin{longtable}{p{\glsnamewidth}p{\glsdescwidth}}%
-    }{%
-      \end{longtable}%
-    }%
-    \renewcommand{\glossentry}[2]{%
-    \raggedright
-    \glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} &
-    \glossentrydesc{##1}\glspostdescription\space ##2\tabularnewline
-    }%
+    % Smart bibliography handling
+    \RequirePackage
+        [backend=biber,
+        autolang=other,
+        citestyle=\@citationstyle,
+        bibstyle=\@citationstyle]{biblatex}
+
+    \DefineBibliographyStrings{english}{%
+        bibliography = {References},
+        references = {References}
+    }
+
+    % disable graphical figures
+    \PassOptionsToPackage{draft}{graphicx}
+\fi
+
+
+% Try to prevent large figures appearing
+% by themselves without any text. Be
+% careful not to make \floatpagefraction
+% larger than \topfraction.
+\renewcommand{\topfraction}{0.85}        % default 0.7
+\renewcommand{\textfraction}{0.1}        % default 0.2
+\renewcommand{\floatpagefraction}{0.75}
+
+%%%%%%%%%%%%% Define the header and footer %%%%%%%%%%%%%
+\pagestyle{fancy}
+\fancyhf{}
+\newcommand{\conditionalmark}{%
+  \protected@edef\temp{\rightmark}%
+  \ifx\temp\@empty
+    \leftmark
+  \else
+    \rightmark
+  \fi
 }
 
-% Table of contents formatting
-\RequirePackage{titletoc}
+\fancyhead[R]{\thepage}
+\fancyhead[L]{\itshape \conditionalmark}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[R]{\thepage}
+}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define chapter and section heading styles.
+
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+
+% Syntax: \titleformat{⟨command⟩} [⟨shape⟩] {⟨format⟩} {⟨label⟩} {⟨sep⟩} {⟨begfore⟩} [⟨after⟩]
+
+% Numerated chapter
+\titleformat
+    {\chapter}[block]
+    {\raggedright\bf\Large \parshape 2 0pt \linewidth \chapterindent \dimexpr\linewidth-\chapterindent}
+    {\makebox[\chapterindent][l]{\thechapter.}}
+    {0em}
+    {\MakeUppercase{#1}}
+\titlespacing{\chapter}{0em}{42pt}{42pt}
+
+
+%% Non-numerated chapter
+\titleformat
+    {name=\chapter, numberless}
+    {\raggedright\bf\Large}{}{0em}
+    {\MakeUppercase{#1}}
+\titlespacing{name=\chapter, numberless}{0em}{18pt}{18pt}
+
+
+% Numerated Section
+\titleformat
+    {\section}[block]
+    {\raggedright\bf\large \parshape 2 0pt \linewidth \chapterindent \dimexpr\linewidth-\chapterindent}
+    {\makebox[\chapterindent][l]{\thesection}}
+    {0em}
+    {#1}
+\titlespacing{\section}{0em}{18pt}{12pt}
+
+
+% Non-numerated Section % TODO: do we have non-numerated sections?
+\titleformat
+    {name=\section, numberless}
+    {\raggedright\bf\large}
+    {}
+    {0em}
+    {#1}
+\titlespacing{name=\section, numberless}{0em}{18pt}{12pt}
+
+% Subsection
+\titleformat
+    {\subsection}[block]
+    {\raggedright\bf\large \parshape 2 0pt \linewidth \chapterindent \dimexpr\linewidth-\chapterindent}
+    {\makebox[\chapterindent][l]{\thesubsection}}
+    {0em}
+    {#1}
+\titlespacing{\subsubsection}{0em}{18pt}{12pt}
+
+
+%%%%%%%% Glossary settings %%%%%%%%
+
+\ifdraftmode\else
+    \newlength\glsnamewidth
+    \newglossarystyle{taulong}{
+        \setglossarystyle{long}
+        \renewenvironment{theglossary}{
+          \tablehead{}
+          \tabletail{}
+          \begin{longtable}{p{\glsnamewidth}p{\glsdescwidth}}
+        }{
+          \end{longtable}
+        }
+        \renewcommand{\glossentry}[2]{
+        \raggedright
+        \glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} &
+        \glossentrydesc{##1}\glspostdescription\space ##2\tabularnewline
+        }
+    }
+\fi
+
+%%%%%%%%%%%%% Table of contents formatting %%%%%%%%%%%%
 
 \titlecontents{chapter}[0pt]{}%
     {\parbox[t]{2em}{\thecontentslabel.}}{}{\titlerule*[1pc]{.}\contentspage}
 \dottedcontents{section}[4em]{}{2em}{1pc}
 \dottedcontents{subsection}[7em]{}{3em}{1pc}
 
-\newenvironment{appendices}{%
-\setcounter{chapter}{0}
-\renewcommand{\thechapter}{\Alph{chapter}}
-\renewcommand{\theHchapter}{\Alph{chapter}}
-\titleformat
-    {\chapter}{\raggedright\bf\Large%
-    \parshape %
-    2 %
-    0pt \linewidth %
-    \chapterindent \dimexpr\linewidth-\chapterindent}
-    {\MakeUppercase{\appendixname~\thechapter:}}{\chapterspace}
-    {\fancyhf{}\rhead{\thepage}\MakeUppercase{##1}}
-\titlecontents{chapter}[0pt]{}%
-    {Appendix~\thecontentslabel:~}{}{\titlerule*[1pc]{.}\contentspage}
+% define the appendices environment with letter numbering
+\newenvironment{appendices}{
+    \setcounter{chapter}{0}
+    \renewcommand{\thechapter}{\Alph{chapter}}
+    \renewcommand{\theHchapter}{\Alph{chapter}}
+    \titleformat
+        {\chapter}
+        {\raggedright\bf\Large \parshape 2 0pt \linewidth \chapterindent \dimexpr\linewidth-\chapterindent}
+        {\MakeUppercase{\appendixname~\thechapter:}}
+        {\chapterspace}
+        {\MakeUppercase{##1}}
+    \titlecontents
+        {chapter}[0pt]
+        {}
+        {Appendix~\thecontentslabel:~}
+        {}
+        {\titlerule*[1pc]{.}\contentspage}
 }{}
 
 % Flexible list modifications
