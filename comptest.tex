@@ -1,0 +1,18 @@
+\pdfminorversion=7
+%\input{meta}
+\begin{filecontents*}[overwrite]{\jobname.xmpdata}
+        \Title{Document’s title}
+        \Author{Author’s name}
+        \Language{en-GB}
+        \Subject{The abstract or short description.}
+        \Keywords{keyword1\sep keyword2\sep keyword3}
+    \end{filecontents*}
+    \documentclass[ieee]{tauthesis}
+    \usepackage{colorprofiles}
+    \hypersetup{pdfstartview=}
+
+\makeglossaries
+\loadglsentries[main]{tex/glossary}
+    \begin{document}
+    The text of the document goes here.
+    \end{document}
