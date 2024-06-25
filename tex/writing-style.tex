@@ -111,6 +111,30 @@ person_df = (
     {code/example-code.c}
 
 
+%% This declares a command \Comment
+%% The argument will be surrounded by /* ... */
+\SetKwComment{Comment}{/* }{ */}
+
+\begin{algorithm}
+\caption{An algorithm with caption}\label{alg:two}
+\KwData{$n \geq 0$}
+\KwResult{$y = x^n$}
+$y \gets 1$\;
+$X \gets x$\;
+$N \gets n$\;
+\While{$N \neq 0$}{
+  \eIf{$N$ is even}{
+    $X \gets X \times X$\;
+    $N \gets \frac{N}{2}$ \Comment{This is a comment}
+  }{\If{$N$ is odd}{
+      $y \gets y \times X$\;
+      $N \gets N - 1$\;
+    }
+  }
+}
+\end{algorithm}
+
+
 \section{Accessible thesis}
 
 The Finnish law, following the European Union directive 2016/2102 on accessibility of the websites and mobile applications of public sector bodies, demands that any electronic publications are made appropriately accessible (within reason). This also applies to your thesis, and therefore you should know or find out what is expected of you and your work. The writer or maintainer of the template assumes no responsibility on behalf of thesis authors!
