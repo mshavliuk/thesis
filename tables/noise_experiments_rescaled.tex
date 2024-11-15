@@ -1,0 +1,15 @@
+\begin{tabular}{p{1cm}p{1.2cm}ccc}
+\toprule
+Noise level &  & $\overline{\text{ROC-AUC}}$ \textuparrow & $\overline{\text{AUC-PR}}$ \textuparrow & $\overline{\text{min(Re,Pr)}}$ \textuparrow  \\
+\midrule
+ & \underline{Z-score} & 0.575\(\pm\)0.004 & 0.568\(\pm\)0.006 & 0.593\(\pm\)0.013 \\
+\multirow[t]{2}{*}{25.0\%} & ECDF & \textbf{0.869\(\pm\)0.003 \(+51\%\)} & \textbf{0.820\(\pm\)0.004 \(+44\%\)} & \textbf{0.765\(\pm\)0.010 \(+29\%\)} \\
+\cline{1-5}
+ & \underline{Z-score} & 0.285\(\pm\)0.009 & 0.372\(\pm\)0.007 & 0.368\(\pm\)0.019 \\
+\multirow[t]{2}{*}{50.0\%} & ECDF & \textbf{0.834\(\pm\)0.002 \(+193\%\)} & \textbf{0.794\(\pm\)0.003 \(+113\%\)} & \textbf{0.848\(\pm\)0.006 \(+130\%\)} \\
+\cline{1-5}
+ & \underline{Z-score} & 0.139\(\pm\)0.011 & 0.196\(\pm\)0.006 & 0.228\(\pm\)0.013 \\
+\multirow[t]{2}{*}{75.0\%} & ECDF & \textbf{0.411\(\pm\)0.006 \(+196\%\)} & \textbf{0.397\(\pm\)0.004 \(+103\%\)} & \textbf{0.447\(\pm\)0.012 \(+96\%\)} \\
+\cline{1-5}
+\bottomrule
+\end{tabular}

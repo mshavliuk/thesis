@@ -1,13 +1,10 @@
 \pdfminorversion=7
 
-\input{meta.tex}
+\input{meta}
+\input{variables}
+\documentclass{tauthesis}
 
-\documentclass[ieee]{tauthesis}
-
-
-% TODO: check if this is a good package or not, recommended by Dr. Trefor Bazett
-%\usepackage{cleveref}
-% Syntax: \cref{label} to reference a \label for a figure, table, etc.
+\graphicspath{figures/}
 
 % Graphs
 % \usepackage{pgfplots}
@@ -17,28 +14,52 @@
 % \usepackage{subcaption}
 
 % Mathematics packages
-\usepackage{amsmath, amssymb, amsthm}
+\usepackage{amsmath}% For the equation* environment, see https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath
+\usepackage{amssymb, amsthm}
 %\usepackage{bm}
 
-%\sisetup{
-%    detect-all,
-%    math-sf=\mathrm,
-%    exponent-product=\cdot,
-%}
+\usepackage{booktabs} % for better tables
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{geometry}
+\usepackage[ruled]{algorithm2e}
 
-%%%%% Your commands.
+\usepackage{float}
 
-% Print verbatim LaTeX commands
-\newcommand{\verbcommand}[1]{\texttt{\textbackslash #1}}
+% for referencing figures, tables, chapters, pages etc.
+% has to be loaded after other supported packages
+\usepackage{cleveref}
 
+\AtBeginEnvironment{appendices}{
+    \crefalias{section}{appendix}
+    \titlespacing*{\chapter}{0pt}{-70pt}{0pt}
+}
+
+
+\usepackage{siunitx}
+
+\sisetup{
+    group-separator={,},  % Use comma as the group separator
+    round-mode=places,    % Use rounding
+    print-unity-mantissa=false, % Don't print 1 in front of a decimal
+    round-precision=3,    % to two decimal places
+    round-pad=false, % Do not pad numbers with zeros
+    exponent-product=\cdot, % Use \cdot as the exponent symbol
+    separate-uncertainty=true, % separate uncertainty with a +/-
+    per-mode=symbol,
+}
+
+\DeclareSIUnit{\mmHg}{mmHg}
+
+\usepackage{dsfont}
 
 %%%%% Glossary and Bibleography
 
 \ifdraftmode\else
     \makeglossaries
-    \loadglsentries[main]{./tex/glossary.tex}
+    \loadglsentries[main]{./tex/glossary}
 
-    \addbibresource{tex/references.bib}
+    \addbibresource{main.bib}
 \fi
 
 \begin{document}
@@ -54,8 +75,13 @@
 %%%%% Abstracts and preface.
 
 \ifdraftmode\else
-    \abstract{tex/abstract.tex}
-    \preface{tex/preface.tex}
+    \abstract
+
+    \input{tex/acknowledgements}
+
+    \preface{tex/preface}
+
+    \input{tex/AI_disclaimer}
 
     %%%%% Table of contents.
     \tableofcontents
@@ -67,7 +93,7 @@
     \setlength{\glsdescwidth}{0.75\textwidth}
     \renewcommand*{\glsgroupskip}{}
 
-    \printglossary[title={Glossary}]
+    \printglossary[title={Glossary},type=main]
 \fi
 
 
@@ -78,14 +104,19 @@
 \setcounter{page}{1}
 
 
-\chapter{Introduction}
-\label{ch:introduction}
-\input{tex/introduction}
+\input{tex/1_introduction}
 
+\input{tex/2_literature_review}
 
-\chapter{Conclusion}
-\label{ch:conclusion}
-\input{tex/conclusion}
+\input{tex/3_dataset}
+
+\input{tex/4_methodology}
+
+\input{tex/5_results}
+
+\input{tex/6_discussion}
+
+\input{tex/7_conclusion}
 
 
 \ifdraftmode\else
@@ -96,10 +127,11 @@
 %%%%% Appendices.
 
 \begin{appendices}
+    \crefalias{chapter}{appendix}
 
-    \chapter{Sample attachment}
-    \label{ch:appendix}
-    \input{./tex/appendix}
+    \input{tex/A.features_statistics}
+
+    \input{tex/A.patient_journey}
 
 \end{appendices}
 

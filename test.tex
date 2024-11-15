@@ -1,0 +1,71 @@
+\pdfminorversion=7
+
+\input{meta}
+\input{variables}
+\documentclass{tauthesis}
+
+\graphicspath{figures/}
+
+\usepackage{float}
+% Graphs
+% \usepackage{pgfplots}
+% \pgfplotsset{compat=1.15}
+
+% Subfigures and wrapping text
+% \usepackage{subcaption}
+
+% Mathematics packages
+\usepackage{amsmath}% For the equation* environment, see https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath
+\usepackage{amssymb, amsthm}
+%\usepackage{bm}
+
+\usepackage{booktabs} % for better tables
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{geometry}
+\usepackage[ruled]{algorithm2e}
+% for referencing figures, tables, chapters, pages etc.
+% has to be loaded after other supported packages
+\usepackage{cleveref}
+
+\usepackage{siunitx}
+
+\sisetup{
+    group-separator={,},  % Use comma as the group separator
+    round-mode=places,    % Use rounding
+    print-unity-mantissa=false, % Don't print 1 in front of a decimal
+    round-precision=3,    % to two decimal places
+    round-pad=false, % Do not pad numbers with zeros
+    exponent-product=\cdot, % Use \cdot as the exponent symbol
+    separate-uncertainty=true, % separate uncertainty with a +/-
+}
+
+\usepackage{dsfont}
+
+%%%%% Glossary and Bibleography
+
+\ifdraftmode\else
+    \makeglossaries
+    \loadglsentries[main]{./tex/glossary.tex}
+
+    \addbibresource{main.bib}
+\fi
+
+\begin{document}
+
+\begin{tabular}{lccc}
+\toprule
+  & ROC-AUC \textuparrow & AUC-PR \textuparrow & min(Re,Pr) \textuparrow   \\
+\midrule
+\underline{Original} & 0.899\(\pm\)0.000 & 0.592\(\pm\)0.001 & 0.543\(\pm\)0.001 \\
+100\% Unif noise & 0.827\(\pm\)0.001 \(-8\%\) & 0.402\(\pm\)0.003 \(-32\%\) & 0.416\(\pm\)0.002 \(-23\%\) \\
+No timeseries & 0.612\(\pm\)0.000 \(-32\%\) & 0.197\(\pm\)0.000 \(-67\%\) & 0.185\(\pm\)0.000 \(-66\%\) \\
+No demographics & 0.896\(\pm\)0.000 \(-0\%\) & 0.590\(\pm\)0.001 \(-0\%\) & 0.542\(\pm\)0.001 \(-0\%\) \\
+Shuffle feature types & 0.709\(\pm\)0.000 \(-21\%\) & 0.258\(\pm\)0.001 \(-56\%\) & 0.301\(\pm\)0.001 \(-45\%\) \\
+No value embedding & 0.838\(\pm\)0.000 \(-7\%\) & 0.430\(\pm\)0.001 \(-27\%\) & 0.434\(\pm\)0.001 \(-20\%\) \\
+No variable embedding & 0.768\(\pm\)0.001 \(-15\%\) & 0.332\(\pm\)0.001 \(-44\%\) & 0.351\(\pm\)0.001 \(-35\%\) \\
+No time embedding & 0.895\(\pm\)0.000 \(-0\%\) & 0.581\(\pm\)0.001 \(-2\%\) & 0.555\(\pm\)0.003 \(+2\%\) \\
+\bottomrule
+\end{tabular}
+
+\end{document}

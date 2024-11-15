@@ -1,0 +1,249 @@
+\chapter{Literature Review}
+\label{ch:literature_review}
+\glsresetall
+
+This chapter provides a comprehensive review of current approaches in predictive health analytics, with a focus on transformer-based models applied to \glspl{ehr}. The literature review explores key challenges unique to healthcare data, such as handling temporal information, data sparsity, and class imbalance, and highlights recent innovations designed to address these complexities. By evaluating a range of models, from early statistical methods to advanced deep learning architectures, this chapter aims to contextualize the role of data preprocessing and normalization in predictive modeling. The review identifies existing gaps in the research field, setting the stage for the experimental focus of this thesis.
+
+
+\section{Overview of Predictive Health Analytics}
+
+Over the past decade, predictive health analytics has evolved significantly, particularly in the methods used to model and analyze \glspl{ehr} \cite{yang2020combining,yang2023threshold}. This section reviews key developments in the field, tracing the shift from classical machine learning models to deep learning techniques and, more recently, to transformer-based models.
+
+
+\subsection*{Limitations of Early Statistical Approaches}
+
+Before the rise of deep learning, traditional statistical techniques such as logistic regression, random forests, support vector machines, and the Cox proportional hazards model were the mainstay for predictive modeling in healthcare \cite{emmert2023elements,emmert2019introduction}. Although these methods offered simplicity and interpretability, they struggled with the high dimensionality and complexity of \glspl{ehr}, which often consist of mixed-type variables collected at irregular intervals. As noted by \citeauthor{DeepLearningElectronic2020}, these traditional models were limited in their ability to capture complex nonlinear interactions and fully account for the temporal dynamics critical in healthcare prediction tasks \cite{DeepLearningElectronic2020}. Moreover, they required hand-crafted features and relied on assumptions that were often unsuitable for the heterogeneous nature of clinical data. Consequently, there was a growing recognition of the need for more advanced models that could overcome these limitations.
+
+To overcome the limitations of traditional statistical methods, researchers began exploring deep learning approaches \cite{emmert2020introductory,emmert2020artificial}. \citeauthor{UseElectronicHealth2021} compared artificial neural networks (ANN) with existing rule-based scoring methods commonly used in clinical practice, such as the Elixhauser Comorbidity Index and the Acute Physiology and Chronic Health Evaluation II (APACHE-II) scoring system \cite{UseElectronicHealth2021}. While these rule-based methods provide valuable clinical insight, they often fail to model the complex and nonlinear relationships inherent in high-dimensional healthcare data.
+
+Their findings indicated that deep learning models, particularly ANNs, outperformed traditional statistical models in disease risk prediction tasks. They stated ``Among all methods, ANN had the best accuracy,'' and concluded that ``machine learning and data mining approaches for predicting disease risk are more accurate than purely statistical approaches'' \cite[][p.~751]{UseElectronicHealth2021}. The study also highlighted the limitations of traditional statistical methods, including a lower accuracy when faced with complex relationships among input variables and challenges with missing data.
+
+In addition, the review observed an upward trend in the use of deep learning for predicting risks of cardiovascular diseases, diabetes, breast cancer, and other conditions. However, they acknowledged that the number of studies available at the time was relatively limited ($n=36$), signaling the need for more research to validate and expand on these findings.
+
+\subsection*{Deep Learning in Predictive Health Analytics}
+
+In \citeyear{DeepLearningElectronic2020}, \citeauthor{DeepLearningElectronic2020} conducted a comparative review of several deep neural network architectures applied to the \gls{ehr} data, including autoencoders, convolutional neural networks (CNN), recurrent neural networks (RNN) and long short-term memory networks (LSTM) \cite{DeepLearningElectronic2020}. At that time, transformer-based models had not yet been widely applied to healthcare analytics, and the review focused on these earlier deep learning methods. This study highlighted models such as eNRBM, Deep Patient, Deepr, and RETAIN, which were designed to process high-dimensional clinical data. Among them, RETAIN demonstrated superior performance in terms of interpretability and predictive accuracy \cite{RETAIN2017}. The success of RETAIN underscored the need for models that could effectively handle the complexities of healthcare data, particularly its temporal nature.
+
+\subsection{Transformer Architecture}
+
+Building on advances in deep learning, the introduction of the transformer architecture by \citeauthor{AttentionAllYouNeed2017} in their seminal work \citetitle{AttentionAllYouNeed2017} marked a pivotal moment in the field \cite{AttentionAllYouNeed2017}. This architecture transformed machine learning by introducing a self-attention mechanism, a novel approach that replaced the need for recurrent or convolutional structures in sequence modeling tasks.
+
+The main innovation of the transformer is its ability to model relationships between all elements of a sequence simultaneously through the self-attention mechanism, which assigns varying levels of importance (or ``attention'') to different parts of the input sequence. This approach allows the transformer to capture long-range dependencies and contextual relationships in data more efficiently than previous architectures, especially in time-series or language processing tasks where global context is essential. A more in-depth analysis of the self-attention mechanism and its implementation will be provided in \cref{ch:methodology} in the context of the specific model selected for our experiments.
+
+\subsection{The Rise of Transformer-based Models}
+
+Transformers revolutionized the ability to model long-range dependencies and sequential data, making them highly effective in domains requiring the handling of complex temporal patterns. A recent survey from \citeyear{TransformersHealthcareSurvey2023} conducted by \citeauthor{TransformersHealthcareSurvey2023} identified transformer models as a promising approach for healthcare applications \cite{TransformersHealthcareSurvey2023}. Focusing exclusively on transformer models applied across a range of tasks and data modalities in healthcare, the survey emphasized their suitability in addressing key challenges such as complex temporal dynamics and irregularly sampled data. The authors concluded that ``Transformer models have demonstrated enormous potential in a wide variety of healthcare applications. They possess a unique ability to model various data modalities, including images, clinical text, biophysical signals, and genomic data. From disease diagnosis to drug discovery, transformer models exhibit the potential to improve patient outcomes and advance medical research'' \cite[][p.~40]{TransformersHealthcareSurvey2023}. In their section on ``Predicting Future Diagnoses using \gls{icd} Codes'', \citeauthor{TransformersHealthcareSurvey2023} highlighted transformer models that effectively incorporate temporal information, such as HiTANet and others. These models weigh visits according to their temporal relevance, significantly enhancing the accuracy of future diagnoses.
+
+However, despite their advantages, transformer models present notable challenges \cite{TransformersHealthcareSurvey2023}. They are computationally intensive and require large datasets for effective training, which can be limiting in the healthcare domaidue to data sensitivity and access restrictions. Additionally, the complexity of transformer architectures can hinder interpretability, an important factor for clinical applicability where explainability is often required. Nonetheless, the development of transformer-based models represent a shift toward more sophisticated approaches capable of capturing the complex temporal dynamics inherent in patient histories, enhancing predictive accuracy in healthcare analytics. Overcoming these computational and interpretability challenges is necessary to enable successful integration into clinical practice.
+
+
+\section{Evaluation metrics}
+\label{sec:evaluation_metrics}
+
+Selecting appropriate evaluation metrics is crucial for assessing and comparing the performance of different models. This section outlines the primary metrics used in the literature to evaluate binary classification models \cite{emmert2019comprehensive}, providing a foundation for the comparative analyses presented in subsequent sections.
+
+%"AUC does not
+%place more emphasis on one class over the other, so it is not bi-
+%ased against the minority class. ROC curves, like precision-recall
+%curves, can also be used to assess different tradeoffs—the number
+%of positive examples correctly classified can be increased at the
+%expense of introducing additional false positives. ROC analysis
+%has been used by many systems designed to deal with rarity, such
+%as the Shrink data mining system" \cite{Weiss2004Mining}
+
+\subsection{Area Under the Receiver Operating Characteristic Curve}
+
+The \gls{auroc} evaluates a model's ability to distinguish between the two classes across a range of classification thresholds. It is computed as the area under the Receiver Operating Characteristic (ROC) curve, which plots the True Positive Rate (TPR) against the False Positive Rate (FPR) at all possible threshold values.
+
+The True Positive Rate and False Positive Rate are defined as:
+\[
+    \text{TPR} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}},
+\]
+\[
+    \text{FPR} = \frac{\text{False Positives}}{\text{False Positives} + \text{True Negatives}}.
+\]
+
+The \gls{auroc} can be formally expressed as:
+\[
+    \text{\gls{auroc}} = \int_{0}^{1} \text{TPR}(\text{FPR}^{-1}(t)) \, dt,
+\]
+where \(\text{FPR}^{-1}(t)\) represents the inverse of the False Positive Rate at a given threshold \(t\).
+
+An \gls{auroc} score of 0.5 indicates no discriminative ability (random guessing), while a score of 1.0 suggests perfect classification. The \gls{auroc} provides a summary of the model's performance across all thresholds, offering a broad measure of its ability to separate the classes (mortality and survival).
+
+However, in highly imbalanced datasets, the \gls{auroc} may present an overly optimistic evaluation. This occurs because the metric considers performance at all thresholds, including those that may never be relevant in practical applications. Specifically, in cases where the positive class is significantly underrepresented, the \gls{auroc} may still appear high even if the model fails to accurately classify the minority class \cite{IntroductionROCAnalysis2006}. Despite this limitation, \gls{auroc} is widely used because it remains insensitive to class distribution and offers a general assessment of a model's discriminative ability. It is particularly useful when comparing models across different datasets or tasks with varying class distributions.
+
+\subsection{Area Under the Precision-Recall Curve}
+\label{sec:aucpr}
+
+The \gls{aucpr} evaluates the trade-off between precision and recall across different thresholds by calculating the area under the Precision-Recall (PR) curve. Precision and recall are defined as:
+\[
+    \text{Precision} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Positives}},
+\]
+\[
+    \text{Recall} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}.
+\]
+
+The \gls{aucpr} is defined as:
+\[
+    \text{\gls{aucpr}} = \int_{0}^{1} \text{Precision}(\text{Recall}^{-1}(t)) \, dt.
+\]
+
+In imbalanced datasets, the \gls{aucpr} is often more informative than the \gls{auroc} because it focuses on the performance of the model on the positive (minority) class \cite{PrecisionRecallPlot2015}. A higher \gls{aucpr} indicates that the model maintains high precision across various levels of recall, which is important when the cost of false positives (e.g., unnecessary interventions) and false negatives (e.g., missed critical cases) differs significantly, as in clinical mortality prediction.
+
+\subsection{Minimum of Recall and Precision}
+
+The \gls{minrp} allows estimate the balance between model's precision and recall \cite{STraTS2022}. It is defined as the maximum value of the minimum between precision and recall across all classification thresholds:
+\[
+    \text{min(Re, Pr)} = \max_{\tau \in [0,1]} \left( \min \left( \text{Recall}(\tau), \text{Precision}(\tau) \right) \right),
+\]
+where \(\tau\) represents the classification threshold.
+
+This metric emphasizes the balance between precision and recall by identifying the threshold at which both metrics are optimized simultaneously. By focusing on this trade-off point, \gls{minrp} provides a single-value summary that is sensitive to class imbalance, highlighting the model's ability to perform well in scenarios where both precision and recall are highly relevant.
+
+
+There are many other metrics available to assess model performance, including the F1 score, accuracy, and Matthews correlation coefficient. Each provides a distinct perspective on model performance, particularly regarding discriminative ability, sensitivity to the minority class, and the balance between precision and recall. We focus specifically on \gls{auroc}, \gls{aucpr}, and \gls{minrp} as these metrics will be central to the upcoming chapters, where they will play a pivotal role in assessing the impact of our proposed solutions during the experimental phase.
+
+These evaluation metrics provide a basis for analyzing the performance of transformer-based models in predictive health analytics. The following section will review specific transformer architectures and their applications in healthcare, focusing on how these models address the complexities inherent in clinical data.
+
+\section{Overview of Transformer-based Models for Healthcare Analytics}
+
+Transformer-based models have become central to healthcare analytics, particularly in processing time-series data from \glspl{ehr}. A common theme across these models is their approach to capturing temporal dynamics, which is crucial for understanding patient state changes in the context of irregular and sparse data over time. This section provides an overview of several transformer models, focusing on their strategies for managing temporal information and their methods for encoding input data. In particular, the encoding of continuous values is relevant to this research, as it will become a crucial element for our research.
+
+This review lays the groundwork for selecting the most suitable model for further analysis. The selection criteria include model performance, code availability, compatibility with publicly available datasets, and computational feasibility.
+
+
+\subsection{HiTANet}
+
+HiTANet is a \textbf{Hi}erarchical, \textbf{T}ime-aware \textbf{A}ttention \textbf{Net}work designed for risk prediction on \glspl{ehr} \cite{HiTANet2020}. The model processes longitudinal patient data represented as sequences of visits, where each visit consists of diagnosis codes encoded as binary one-hot vectors. HiTANet predicts the risk of future disease occurrence, focusing on chronic conditions such as Chronic Obstructive Pulmonary Disease, Heart Failure, and Kidney Disease, using binary classification. One of the main challenges the model addresses is the non-stationary nature of disease progression and the varying importance of historical data across patients. Unlike earlier models that assumed stationary progression and applied uniform time decay, HiTANet models time information more effectively by incorporating both local and global temporal stages, mimicking clinical decision-making processes. HiTANet outperformed twelve competing baselines in experiments across three real-world datasets, achieving superior \gls{auroc} and over \qty{7}{\percent} improvement in F1 score compared to other models, such as SAnD and RETAIN.
+
+\paragraph{Time Awareness}
+HiTANet incorporates time information at both local and global levels. At the local level, time intervals between visits are embedded into the visit representations using a time-aware transformer. The elapsed time between visits is transformed into a time embedding, which is then combined with the visit embedding to form the contextual visit representation. This allows the model to capture non-monotonic time decay patterns and avoid the limitations of fixed decay functions. At the global level, the attention mechanism identifies key timestamps in a patient's medical history by computing attention scores between the global patient representation.
+
+\paragraph{Value Encoding}
+Each visit is represented as a binary one-hot vector, indicating the presence or absence of diagnosis codes (\gls{icd}-9 codes). This vector is transformed into a dense embedding using a \gls{ffn}, capturing the clinical information in a continuous vector space.
+
+\paragraph{Limitations}
+Despite its novel approach to time modeling, HiTANet has limitations. The model only uses binary one-hot vectors for diagnosis codes, limiting its ability to learn robust vector embeddings or capture semantic relationships among medical concepts. Additionally, it does not incorporate other important clinical information such as lab results, medications, or vital signs, nor does it consider demographic data, which are often significant predictors in healthcare outcomes. Moreover, HiTANet relies on proprietary datasets focusing on specific chronic conditions, limiting its generalizability to other healthcare settings. Consequently, HiTANet was not selected for replication in this study due to these constraints and the need for models capable of handling more comprehensive and varied EHR data.
+
+\subsection{T3Net}
+T$^3$Net is a transformer-based model designed for predicting patient outcomes from \glspl{ehr}, emphasizing time-awareness and interpretability \cite{T3Net2021}. The model uses various  forms of patient data, including diagnoses, procedures, lab tests, and pharmaceutical codes, to predict outcomes such as 12-month mortality and 6-month hospitalization. T$^3$Net simplifies temporal information incorporation within the transformer by employing a trigonometric time encoding method. In comparative experiments, T$^3$Net  demonstrated superior performance to HiTANet, achieving an \gls{auroc} of \qty{91.96}{\percent} and an average precision of \qty{20.35}{\percent} in mortality prediction, with similarly strong results for hospitalization prediction.
+
+\paragraph{Time Awareness}
+T$^3$Net incorporates temporal data using a novel trigonometric time decomposition method. Before the self-attention layer, each medical entity embedding is multiplied by $\cos^2(\alpha t)$ and $\sin^2(\alpha t)$, where $\alpha$ is a predetermined frequency (\qty{365}{days}) and $t$ denotes the time elapsed since the entity was assigned. This method allows the model to capture periodic patterns in patient data without losing the original embedding information through additive encoding methods.
+
+\paragraph{Value Encoding}
+Medical entities are encoded using numeric vector embeddings, which are initialized with pretrained vectors derived from a Word2Vec model trained on the same dataset. This approach allows the model to leverage existing semantic relationships between medical codes. The embeddings are further fine-tuned during training, which enhances model convergence and overall performance. The authors conducted ablation studies demonstrating that models without pretrained embeddings tend to overfit more quickly and perform worse, underscoring the value of transfer learning. However, the paper lacks detailed explanations regarding the specific methods used to treat and convert \gls{ehr} data into Word2Vec embeddings, as well as how these embeddings are updated during the training phase. This lack of clarity leaves certain aspects of the encoding process open to interpretation.
+
+\paragraph{Limitations}
+
+Despite its promising results, T$^3$Net has several limitations that affect its applicability. The sources describe T3Net's use of patient medical entities, including diagnoses, procedures, lab tests, and pharmaceutical codes, and do not explicitly mention encoding strategies for numerical measurement values. The model was developed and tested using proprietary data from the Kaiser Permanente Mid-Atlantic States (KPMAS) medical system, which is not publicly available. This restricts the ability of other researchers to replicate the study or assess the model's generalizability to different populations and healthcare settings.
+
+Another significant limitation is the unavailability of the source code. Upon requesting access, the authors replied that they were unable to provide the code or a pretrained model due to organizational constraints. This lack of accessibility hinders our ability to implement, evaluate, or adapt T$^3$Net for further research or clinical applications. Given these limitations, T$^3$Net was not selected for replication or further analysis in this study.
+
+
+\subsection{Hi-BEHRT}
+
+Hi-BEHRT is another hierarchical transformer-based model designed to enhance clinical event prediction using multimodal, longitudinal \glspl{ehr} \cite{HiBEHRT2023}. Building upon the BEHRT architecture \cite{BEHRT2020}, Hi-BEHRT addresses the challenge of long EHR sequences, improving predictions for diseases such as heart failure, diabetes, chronic kidney disease, and stroke. Hi-BEHRT achieved up to a \qty{6}{\percent} improvement in the \gls{auroc} and up to an \qty{11}{\percent} improvement in the \gls{aucpr} compared to BEHRT.
+
+\paragraph{Time awareness}
+
+Hi-BEHRT utilizes a hierarchical sliding window approach to segment long \gls{ehr} sequences, effectively capturing both short-term and long-term dependencies. The model divides the full medical history into smaller segments using a sliding window mechanism. Within each segment, a transformer acts as a local feature extractor to learn temporal interactions, leveraging the stronger correlations of medical records that are closer in time. Subsequently, another transformer serves as a global feature aggregator, summarizing the local features extracted from all segments for risk prediction. Unlike its predecessor, which relies on basic visit indices and patient age to capture temporal dynamics, Hi-BEHRT provides a more granular representation of time dependencies, making it better suited for handling the complexity of longitudinal \gls{ehr} data.
+
+
+\paragraph{Value Encoding}
+
+Hi-BEHRT encodes continuous variables by binning them into categorical ranges. For example, systolic blood pressure readings within ranges of \qtyrange{80}{200}{\mmHg}, are binned using a \qty{5}{\mmHg} step size. Similarly, BMI values ranging from \qtyrange{16}{50}{\kilogram\per\meter\squared} are binned with a \qty{1}{\kilogram\per\meter\squared} step size. This binning process converts continuous measurements into categorical data. While this approach simplifies the representation of continuous values, it may result in a loss of finer details that could be crucial for more precise clinical predictions.
+
+\paragraph{Limitations}
+
+While Hi-BEHRT offers a promising approach for predicting clinical events using long and complex \gls{ehr} sequences, it has several limitations.
+The reliance on binning continuous variables into categorical ranges requires manual feature engineering and may lead to a loss of granularity and potentially diminish predictive accuracy compared to models that process continuous values directly.
+Additionally, the computational requirements for training Hi-BEHRT are substantial.
+The authors report that training the model required approximately \num{10} days across two GPUs, indicating high computational cost and time investment.
+This may limit the model's practicality for wider adoption, especially in settings with limited computational resources.
+Moreover, the source code for Hi-BEHRT has not been publicly released, which restricts the ability to reproduce the results or adapt the model for other research purposes.
+For these reasons, Hi-BEHRT was not selected for replication in this study.
+
+\subsection{TransformEHR}
+
+TransformEHR is a transformer-based encoder-decoder model designed to enhance the prediction of disease outcomes using longitudinal \glspl{ehr} \cite{TransformEHR2023}. Unlike previous \gls{ehr}-based models that rely on bidirectional encoder representations (such as BERT), TransformEHR employs a generative sequence-to-sequence framework to predict future \gls{icd} codes based on a patient's historical data. The model aims to address the challenge of modeling complex disease trajectories, where patients often have multiple, correlated conditions that collectively influence their health outcomes.
+
+In their experiments, \citeauthor{TransformEHR2023} demonstrated that TransformEHR outperformed state-of-the-art models in various prediction tasks. Specifically, TransformEHR improved the \gls{aucpr} by \qty{2}{\percent} for pancreatic cancer onset and by \qty{24}{\percent} for intentional self-harm prediction among patients with post-traumatic stress disorder, compared to baseline models. The high performance in predicting intentional self-harm highlights the potential of TransformEHR in building effective clinical intervention systems.
+
+\paragraph{Time Awareness}
+
+TransformEHR incorporates temporal information by using sinusoidal position embeddings for visit dates, similar to the approach used in the original transformer architecture. The model also explored relative time embeddings (capturing time intervals between visits), with results indicating that date-specific embeddings provided slightly better performance in disease prediction tasks. This encoding allows the model to better capture the temporal relationships inherent in longitudinal \gls{ehr} data without losing crucial details.
+
+\paragraph{Value Encoding}
+
+The model uses multi-level embeddings to represent patient data. Demographic information (age, gender, race, marital status) and \gls{icd}-10 codes are included as predictors. Each \gls{icd} code is embedded into a vector space. Within each visit, \gls{icd} codes are ordered by their priority as assigned by healthcare providers, reflecting the clinical significance of each diagnosis \cite[][3]{TransformEHR2023}. The embeddings for each visit are constructed by summing the code embeddings, visit embeddings, and time embeddings, effectively capturing both the content and context of the patient's medical history.
+
+\paragraph{Limitations}
+
+While TransformEHR demonstrates superior performance in predicting future \gls{icd} codes and outcomes, it has several limitations. The model relies on \gls{icd} codes and demographic information, potentially limiting its applicability in settings where such detailed coding is not available or consistent. The requirement for ordered \gls{icd} codes necessitates manual labeling by medical professionals, which may not be feasible in unsupervised settings or where manual effort is constrained. Incorporating additional data types, such as procedure codes, medications, lab results, and phenotypic data from clinical notes, could enhance the model's predictions but would significantly increase computational resources needed. Additionally, the computational requirements for training TransformEHR are substantial. The authors report using four NVIDIA Tesla P40 GPUs and training the model for six days. This high computational cost may limit the model's practicality for institutions with limited resources. Although the source code for TransformEHR is available on GitHub\footnote{\url{https://github.com/whaleloops/TransformEHR}}, the substantial computational resources required to train the model make it unsuitable for use in this study.
+
+\subsection{\citefield{STraTS2022}{shorttitle}}
+
+\textcite{STraTS2022} proposed a transformer-based architecture called \citefield{STraTS2022}{shorttitle} (\textbf{S}elf-supervised \textbf{Tra}nsformer for \textbf{T}ime-\textbf{S}eries) designed to address the challenges of missingness, sparsity, and irregular time intervals in clinical time-series data \cite{STraTS2022}. \citefield{STraTS2022}{shorttitle} uses a regression model to predict continuous values during pretraining with unlabeled data, followed by binary classification fine-tuning with labeled data. In mortality prediction tasks on the \gls{mimiciii} dataset, it outperformed models such as GRU and SAnD, achieving higher performance, especially when labeled data were limited. Specifically, \citefield{STraTS2022}{shorttitle} improved \gls{aucpr} by \qty{3.2}{\percent} over the second-best baseline model.
+
+\paragraph{Time Awareness}
+
+To address data sparsity, missingness, and irregular time intervals, \citefield{STraTS2022}{shorttitle} represents time series as sets of timestamps, a variable identifier, and the corresponding measurement value that are embedded by the transformer network into a vector space. A Fusion Self-Attention component combines these embeddings using a self-attention mechanism, capturing the temporal dynamics of the entire \gls{ehr} sequence.
+
+\paragraph{Value encoding}
+
+\textcite{STraTS2022} propose a novel \gls{cve} technique using a one-to-many \gls{ffn} to embed continuous values, specifically time and measurement values. This allows the model to handle continuous input data from lab tests and other measurements without the need for discretization.
+
+
+\paragraph{Limitations}
+Unlike manually curated data, such as the \gls{icd} diagnoses used by previous models, clinical measurements often contain outliers that must be addressed. The data preprocessing pipeline for \citefield{STraTS2022}{shorttitle} includes the identification and removal of outliers by defining valid value ranges based on medical expertise and standard practices.
+
+\subsection{Summary and Model Selection}
+
+In summary, the reviewed transformer-based models offer innovative approaches to handling temporal data in healthcare analytics. A key challenge these models address is the effective utilization of longitudinal \gls{ehr} data for accurate prediction of disease risk and mortality. They employ different training techniques and ultimately solve binary classification tasks for disease risks and mortality predictions.
+
+The models incorporate various strategies for encoding time and value information, reflecting diverse approaches to handling complex clinical data. For example, HiTANet and T$^3$Net introduce time-aware mechanisms but are limited by data and code accessibility issues, as well as constraints in handling diverse clinical inputs. Hi-BEHRT enhances sequence modeling but at the cost of significant computational resources and potential loss of information due to variable binning. TransformEHR offers a novel generative framework, but requires extensive computational power and relies heavily on detailed \gls{icd} coding.
+
+Different data encoding methods were observed, including one-hot encoding and dense vector embeddings for categorical data, binning continuous data into categories, treating \gls{ehr} data as text with Word2Vec and directly using \gls{cve} for continuous data. The models also varied in their handling of time information, with some using sinusoidal position embeddings, relative time embeddings, or date-specific time embeddings to capture temporal dynamics.
+
+\paragraph{Selection for this study}
+
+The availability of the source code \footnote{\url{https://github.com/sindhura97/STraTS}}, the publicly available and widely recognized \gls{mimiciii} dataset, and the model's performance in comparison to other state-of-the-art models, make \citefield{STraTS2022}{shorttitle} a strong candidate for further analysis in this study. Its ability to handle continuous values and temporal dynamics, as well as its performance in mortality prediction tasks, align with the objectives of this research. Therefore, \citefield{STraTS2022}{shorttitle} was selected for replication and evaluation in this study.
+
+
+\section{Research Gaps}
+
+Despite significant advancements in applying transformer-based models to healthcare analytics, several gaps remain in the existing literature.
+
+One area yet to be explored is the impact of transfer learning on pretraining convergence in transformer models for healthcare applications. Although some studies, such as T$^3$Net, have touched upon the use of pre-trained embeddings such as Med2Vec and Word2Vec, there is a scarcity of in-depth analyses on how these embeddings affect convergence speed and model performance, especially in datasets with limited size. Investigating the effects of transfer learning on transformer models in healthcare analytics could provide valuable insights into the benefits of leveraging pretrained embeddings for improved predictive accuracy and training efficiency.
+
+Additionally, addressing class imbalance in healthcare datasets is a persistent challenge. Techniques like curriculum learning and self-paced learning have the potential to mitigate this issue by structuring the training process, yet few works have attempted to apply these methods in the context of healthcare data \cite{CurriculumLearning,SelfPacedLearning}. As noted by \textcite{PretrainingMedicalSurvey2023}, although self-supervised learning can alleviate problems of class imbalance, it remains a standard issue in healthcare datasets.
+
+\subsection{Lack of Research on Alternative Normalization Methods}
+
+Another notable gap relates to the exploration of alternative normalization methods suitable for the unique characteristics of clinical time-series data. The normalization of continuous variables is essential to achieve high predictive performance and training stability. Among the reviewed papers, many focus on categorical data, using either one-hot encoding \cite{HiTANet2020,SANSformers2021} or learned embedding lookup tables \cite{T3Net2021,HiBEHRT2023,TransformEHR2023,SETOR2021}. For continuous data inputs, Z-score normalization \cite{MultidimensionalPatientAcuity2022,mvtsTransformer2020,STraTS2022} and occasionally Min-Max scaling \cite{DeepTransformerModels2020} are commonly used.
+
+Although Z-score normalization can be applied universally, it is most effective with data that are approximately normally distributed. When applied to highly skewed or bounded distributions, such as log-normal or exponential distributions commonly found in clinical datasets, Z-score normalization may not sufficiently standardize the data. This can result in values at the tails of the distribution having a disproportionately large impact on the scaling, potentially introducing biases that negatively affect model performance.
+
+Furthermore, extreme values remain as outliers even after normalization, which, when paired with squared loss functions, can lead to gradient fluctuations that hinder optimization and often require manual removal by experts, a process that is time-consuming and labor-intensive. Given these limitations, alternative normalization methods tailored to address skewness and unique characteristics of clinical time-series data may yield better results.
+
+One promising approach is \gls{ecdf} normalization, which transforms continuous data into a uniform distribution between \num{0} and \num{1} based on the empirical distribution of the dataset \cite[][219]{ModernIntroductionProbability2005}. \Gls{ecdf} is non-parametric and does not rely on assumptions about the data's underlying distribution, making it suitable for healthcare data, which often deviates from normality. Unlike Z-score  normalization, which depend on statistical parameters such as mean and standard deviation, \gls{ecdf} normalization leverages the entire data distribution, mapping each value to its corresponding percentile. This may allow to reduce sensitivity to outliers and ensure that extreme values are not overly influential, mitigating the need for manual outlier removal.
+
+% TODO: Compare it with uncensored Kaplan-Meier estimator?
+
+An analogous method in computer vision is histogram equalization, which transforms pixel values based on the cumulative distribution function \cite{DigitalImageProcessing}. Just as \gls{ecdf} assigns values based on the rank of data points between \num{0} and \num{1}, histogram equalization redistributes pixel intensities between \num{0} and \num{255} based on their cumulative probability in the image's histogram. Both methods aim to achieve a more uniform distribution, making them effective in dealing with data that are not evenly distributed.
+
+
+Despite these advantages, the application of \gls{ecdf} normalization in transformer-based models for healthcare remains largely unexplored. This method extends beyond traditional standardization techniques by taking advantage of the statistical properties of the dataset to achieve more robust normalization, potentially enhancing model training efficiency and prediction accuracy. Few studies specifically investigate \gls{ecdf} normalization in clinical time-series data. A doctoral dissertation by \citeauthor{WhatsMissingMachine2023} applied \gls{ecdf} normalization to time-series data in the MIMIC-IV dataset; however, their study did not compare \gls{ecdf} with standard normalization methods and was not published in a peer-reviewed journal \cite[][64]{WhatsMissingMachine2023}. Additionally, \citeauthor{RobustDataScaling2016} introduced a Generalized Logistic (GL) function to approximate \gls{ecdf}, proposing it as a solution for handling outliers in biomedical datasets \cite{RobustDataScaling2016}. Their results demonstrated that the GL algorithm consistently outperformed common scaling methods such as Min-Max and Z-score normalization, especially in datasets with small sample sizes. However, this study did not examine the use of this method in transformer-based models or its application to clinical data at larger scales, with the largest dataset including only 768 subjects. Many papers have explored the impact of different normalization methods on the performance of deep learning models in healthcare, but did not include \gls{ecdf} normalization in their research \cite{ExploringEffectNormalization2021,DataNormalizationTask2022,ChoiceScalingTechnique2023}.
+
+There is a significant opportunity to explore \gls{ecdf} normalization within transformer-based models for healthcare analytics. Addressing this gap could lead to improved model robustness and accuracy by effectively handling skewed distributions and outliers common in clinical datasets. The following chapters will investigate the implementation of \gls{ecdf} normalization in transformer architectures and evaluate its impact on predictive performance in healthcare applications.
+
+\section{Conclusion}
+
+The literature review highlights a significant gap in the exploration of \gls{ecdf} normalization within transformer-based models for healthcare analytics. While traditional methods like Z-score normalization are widely used, they often struggle with the challenges posed by clinical data, such as skewed distributions and outliers. \gls{ecdf} normalization, by leveraging the full empirical distribution and reducing sensitivity to extreme values, presents a promising alternative that addresses these limitations. Limited research on its application in deep learning models, particularly transformers, underscores the need for further investigation.
+
+In evaluating existing transformer-based models, key factors such as model performance, availability of source code, dataset accessibility, and computational feasibility were considered. Based on this assessment, \citefield{STraTS2022}{shorttitle} emerged as the most suitable candidate for further research. Its ability to handle continuous values and its time-aware architecture make it an ideal platform for testing the efficacy of \gls{ecdf} normalization.
+
+The next chapter will present a detailed description of the dataset used for \citefield{STraTS2022}{shorttitle} and outline the preprocessing steps involved. This will be followed by an in-depth discussion of the model architecture and training process, along with the experimental design to evaluate the impact of \gls{ecdf} normalization. Through this exploration, the study aims to address the identified research gap and contribute novel insights into improving the performance of transformer-based models in clinical predictive tasks.
+

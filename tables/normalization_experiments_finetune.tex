@@ -1,0 +1,15 @@
+\begin{tabular}{p{1.5cm}lccc}
+\toprule
+Data fraction &   & ROC-AUC \textuparrow & AUC-PR \textuparrow & min(Re,Pr) \textuparrow   \\
+\midrule
+\multirow[t]{2}{*}{10\%} & \underline{Z-score} & 0.884\(\pm\)0.001 & 0.556\(\pm\)0.003 & \textbf{0.530\(\pm\)0.002} \\
+ & ECDF & \textbf{0.886\(\pm\)0.001 \(+0\%\)} & \textbf{0.562\(\pm\)0.004 \(+1\%\)} & 0.527\(\pm\)0.004 \(-1\%\) \\
+\cline{1-5}
+\multirow[t]{2}{*}{50\%} & \underline{Z-score} & \textbf{0.898\(\pm\)0.000} & \textbf{0.596\(\pm\)0.001} & \textbf{0.553\(\pm\)0.001} \\
+ & ECDF & 0.895\(\pm\)0.000 \(-0\%\) & 0.587\(\pm\)0.001 \(-2\%\) & 0.540\(\pm\)0.001 \(-2\%\) \\
+\cline{1-5}
+\multirow[t]{2}{*}{100\%} & \underline{Z-score} & 0.898\(\pm\)0.000 & \textbf{0.599\(\pm\)0.001} & \textbf{0.553\(\pm\)0.001} \\
+ & ECDF & \textbf{0.900\(\pm\)0.000 \(+0\%\)} & 0.598\(\pm\)0.001 \(-0\%\) & 0.549\(\pm\)0.001 \(-1\%\) \\
+\cline{1-5}
+\bottomrule
+\end{tabular}

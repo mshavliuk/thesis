@@ -1,0 +1,31 @@
+\begin{algorithm}[h]
+\setstretch{1.35}
+\caption{Model fine-tuning}
+\label{algorighm:finetune}
+\KwData{\( \mathcal{D}'_{train}, \mathcal{D}'_{val}, \mathcal{D}'_{test} = \{(\mathbf{d}_i, \mathbf{v}_i, \mathbf{t}_i, \mathbf{f}_i, y_i)\}_{i=1}^{N'} \) }
+\KwResult{Fine-tuned model \(\mathcal{M}_{ft}\) with highest \gls{auroc}+\gls{aucpr} }
+
+\textbf{Data Preparation:} \\
+\nl Standardize feature values: \(\bar{v}_f = \frac{v_f - \mu_f}{\sigma_f}\) \label{alg:finetune_start}\;
+\nl Select first 24 hours of \gls{icu} stay: \( \mathbf{T}_{\qty{24}{\hour}} \) \tcp*[l]{see \cref{eq:first_24_window}}
+\nl Compute positive class weight: \(w\) \tcp*[l]{see \cref{eq:positive_class_weight}}
+
+\textbf{Training:} \\
+\ForEach{epoch until metrics stop improving} {
+    \nl Initialize accumulated loss \(\mathcal{L}_{acc} = 0\) \;
+    \ForEach{\(i \in [1; N']\)} {
+        \nl Apply random variable dropout: \( \mathbf{T}'_{\qty{24}{\hour}} \) \tcp*[l]{see \cref{eq:variable_dropout}}
+        \nl Predict class: \(\hat{\mathbf{y}}_i = \mathcal{M}_{ft}(\mathbf{d}_k, T'_{\qty{24}{\hour}} )\) \; \label{alg:finetune_prediction}
+        \nl Accumulate loss: \(\mathcal{L}_{acc} \mathrel{+} = \mathcal{L}^{train}_{wBCE} (y_i, \hat{y}_i, w) \) \tcp*[l]{see \cref{eq:wBCE}} \label{alg:finetune_compute_loss}
+        \If{\(i \mod \text{batch size} = 0 \)} {
+            \nl Backpropagate and update model weights \;
+            \nl Reset accumulated loss \(\mathcal{L}_{acc} = 0\) \;
+        }
+    }
+    \nl Repeat \crefrange{alg:finetune_start}{alg:finetune_prediction} for \(\mathcal{D}'_{val}\) to get \(\hat{\mathbf{y}}_{val}\) \;
+    \nl Compute \gls{auroc} and \gls{aucpr} for \(\hat{\mathbf{y}}_{val}\) \;
+}
+\textbf{Evaluation:} \\
+\nl Repeat \crefrange{alg:finetune_start}{alg:finetune_prediction} for \(\mathcal{D}'_{test}\) to get \(\hat{\mathbf{y}}_{test}\) \;
+\nl Compute \gls{auroc}, \gls{aucpr} and \gls{minrp} for \(\hat{\mathbf{y}}_{test}\) \;
+\end{algorithm}

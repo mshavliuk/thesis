@@ -1,0 +1,57 @@
+\chapter{Introduction}
+\label{ch:introduction}
+
+
+Healthcare data has become one of the most expansive and complex sources of information in the modern world. This wealth of data offers unprecedented opportunities to understand patient trajectories and predict health outcomes. Machine learning, a key player in this revolution, holds the promise of transforming raw data into actionable knowledge that can improve patient care. However, the true power of these models depends on their ability to navigate the inherent challenges of clinical data, including outliers, noise, and class imbalances that could otherwise obscure crucial patterns.
+
+\section{Background}
+
+The past decade has witnessed a significant increase in data generation within the healthcare sector. Healthcare data now represents \qty{30}{\percent} of the global data ecosystem and is expected to continue to grow \cite{TransformersHealthcareSurvey2023}. This surge in data has encouraged the development of machine learning algorithms aimed at analyzing large healthcare datasets to improve diagnosis, prognosis, and decision making.
+
+\Glspl{ehr} are a rich source of such data, storing comprehensive information about patient health journeys, including demographic details, diagnoses, medications, laboratory tests and results, medical images and clinical notes \cite{DeepLearningElectronic2020}. Although \glspl{ehr} have improved the efficiency and accessibility of health systems, they have also presented challenges for clinicians. The sheer volume and complexity of the data can make it difficult to identify key results or discern important patterns and trends without computational assistance \cite{UsingMachineLearning2016}.
+
+Predictive modeling in healthcare, such as disease prediction and mortality risk assessment, has significant potential to improve patient outcomes and optimize resource allocation \cite{UseElectronicHealth2021}. Machine learning models can help identify patients at risk of adverse events, enabling early interventions and personalized care strategies \cite{emmert2018machine,emmert2016need}. In addition, predictive analytics has the potential to reduce healthcare costs by proactively managing patient needs.
+
+Recent advances in machine learning, especially with transformer models \cite{bashath2022data}, have shown promise in handling diverse data modalities and improving predictive performance across a wide range of healthcare applications \cite{TransformersHealthcareSurvey2023}. These models, originally developed for natural language processing, have demonstrated adaptability for healthcare data, capturing complex relationships between time-series data in clinical contexts. However, their effectiveness can be constrained by the inherent challenges of clinical data, such as the presence of outliers, noise, and class imbalance.
+
+Data normalization is a fundamental step in the preparation of data for machine learning models. Traditional normalization techniques, such as Z-score normalization, work most effectively when the data distribution is approximately normal. In datasets with highly skewed or bounded distributions, Z-score normalization may not standardize the data as effectively, especially in the presence of outliers. Addressing these challenges is critical, as the quality of model predictions is directly impacted by the data preprocessing methods used.
+
+%\section{Problem Statement}
+
+Despite the importance of data normalization in predictive modeling, there is a lack of research exploring alternative normalization methods that are robust to the characteristics of clinical data. In conducting a comprehensive literature review of machine learning applications in healthcare, we observed that the field heavily relies on traditional data normalization methods, particularly Z-score normalization, to preprocess clinical data. Hovewer, this approach, although simple, relies on certain assumptions about the underlying distributions, and does not provide a bounded range of output values, which is often undesirable for deep learning applications. This fact suggested a need to investigate alternative methods, which could offer potential to improve model stability and accuracy, essential for reliable healthcare predictive modeling.
+
+
+\section{Research Goals and Significance}
+
+This study began with the broad objective of exploring transformer models in healthcare and identifying a research gap within this domain. Through this exploration, \gls{ecdf} normalization emerged as a promising direction for research. The primary goal of this study is to assess the effectiveness of \gls{ecdf} normalization as an alternative to traditional methods, such as Z-score normalization. Given the identified limitations of widely used normalization techniques, this study seeks to evaluate whether \gls{ecdf} normalization can improve the robustness and accuracy of models when applied to complex clinical data.
+
+The significance of this work lies in its potential to improve the reliability and predictive accuracy of models in clinical settings. By increasing model robustness to outliers and noise, this research supports better clinical decision-making, more accurate risk stratification, and ultimately improved patient outcomes. Furthermore, demonstrating the advantages of \gls{ecdf} normalization can encourage its application across a wider range of predictive modeling tasks in healthcare, contributing to the development of machine learning methods for clinical data.
+
+To achieve our goal, the study defines the following research objectives:
+
+\begin{itemize}
+    \item \textbf{Identify} alternative normalization methods suitable for clinical data with outliers and non-normal distributions.
+    \item \textbf{Select} an appropriate machine learning model and a clinical dataset to effectively measure the impact of different normalization techniques.
+    \item \textbf{Implement} \gls{ecdf} normalization within the preprocessing pipeline of the selected predictive model and compare its performance against Z-score normalization as a baseline.
+    \item \textbf{Simulate} real-world data conditions by introducing varying levels of noise and outliers into the dataset.
+    \item \textbf{Analyze} and compare the predictive performance and robustness of the models using \gls{ecdf} and Z-score normalization, assessing their effectiveness in handling clinical data with outliers and noise.
+\end{itemize}
+
+
+
+\section{Thesis Structure}
+The remainder of this thesis is structured as follows:
+
+\begin{itemize}
+    \item \textbf{Chapter 2: Literature Review} – Provides a review of relevant literature to establish the current landscape of predictive modeling in healthcare. This chapter explores existing approaches, challenges, and recent advancements in machine learning applications for clinical data.
+
+    \item \textbf{Chapter 3: Data} – Describes the dataset used in the experiments, detailing its key properties and preprocessing steps
+
+    \item \textbf{Chapter 4: Methodology} – Details the data preprocessing steps, model implementation, experimental setup, and evaluation metrics, providing a comprehensive overview of the methods used to conduct the research.
+
+    \item \textbf{Chapter 5: Results} – Presents the experimental findings, comparing the performance of \gls{ecdf} and Z-score normalization across various noise levels and outlier conditions.
+
+    \item \textbf{Chapter 6: Discussion} – Interprets the results, discussing their implications, limitations, and relevance in the broader context of machine learning applications in healthcare.
+
+    \item \textbf{Chapter 7: Conclusion} – Summarizes key findings, addresses limitations, and offers recommendations for future research directions.
+\end{itemize}

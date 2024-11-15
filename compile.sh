@@ -1,14 +1,37 @@
 #!/usr/bin/env sh
 
-if [ "$1" = "--fast" ]; then
-    mkdir -p compile
-    pdflatex -output-directory=compile "\\gdef\\draftmode{1} \\input{main.tex}" main.tex
-    mv compile/main.pdf main.pdf
-else
-    latexmk -pdf -shell-escape -f main.tex
-    latexmk -c main.tex
-    rm -f main.bbl main.glg main.glo main.gls main.ist main.upa main.upb main.xmpdata pdfa.xmpi
-    verapdf -f 3b --format text main.pdf
+echo "Compiling $2"
+
+input="$1"
+flag="$2"
+
+# validate input
+if [ -z "$input" ]; then
+    echo "Usage: compile.sh <input.tex> [--fast]"
+    exit 1
+fi
+# check existence of input file
+if [ ! -f "$input" ]; then
+    echo "File not found: $input"
+    exit 1
 fi
 
-open -a Preview main.pdf
+# cut file extension, add .pdf
+output=$(basename $input .tex).pdf
+
+if [ "$flag" = "--fast" ]; then
+  echo "fast compile"
+#    mkdir -p compile
+    pdflatex "\\gdef\\draftmode{1} \\input{$input}" $input
+#    mv compile/main.pdf main.pdf
+    open -a Preview $output
+else
+    lacheck $input
+    latexmk -c $input
+    latexmk -pdf -shell-escape -f $input
+    latexmk -c $input
+    open -a Preview $output
+    verapdf -f 3b --format text $output
+fi
+
+./clear.sh $input

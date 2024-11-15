@@ -1,0 +1,19 @@
+\begin{tabular}{lll}
+\toprule
+\textbf{Model} & \textbf{Hyperparameters} & \textbf{Parameters num.} \\
+\midrule
+GRU & LR = 5e-4 & 95,745 \\
+GRU-D & LR = 5e-4 & 79,363 \\
+TCN & LR = 5e-4, layers = 4, filters = 64, kernel size = 4 & 248,385 \\
+SAnD & LR = 5e-4, N = 4, r = 24, M = 12, h = 2, he = 8 & 167,457 \\
+STraTS & LR = 5e-4 \& 5e-5, M = 2, h = 16 & 104,867 \\
+Ours & LR = 5e-4 \& 5e-5, M = 2, h = 8 & 105,185 \\
+\midrule
+\multirow{4}{*}{\textbf{Common}}
+& Dropout 0.2 \\
+& Hidden dim. 64 \\
+& Batch size 16 \\
+& Gradient clipping 0.3 \\
+& Max number of observations 880 \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,30 @@
+\begin{algorithm}[h]
+\setstretch{1.35}
+\caption{Model Pretraining}
+\label{algorithm:pretrain}
+\KwData{\( \mathcal{D}_{train},\mathcal{D}_{val},\mathcal{D}_{test} = \{(\mathbf{d}_i, \mathbf{v}_i, \mathbf{t}_i, \mathbf{f}_i)\}_{i=1}^{N} \) }
+\KwResult{Pretrained model \(\mathcal{M}_{pt}\) with minimal validation loss \( \mathcal{L}^{val}_{mMSE} \)}
+
+\textbf{Data Preparation:} \\
+\nl Standardize feature values: \(\bar{v}_f = \frac{v_f - \mu_f}{\sigma_f}\) \;
+
+\textbf{Training:} \\
+\ForEach{epoch until validation loss \(\mathcal{L}^{val}_{mMSE} \) stops decreasing} {
+    \nl Initialize accumulated loss \(\mathcal{L}_{acc} = 0\) \;
+    \ForEach{\(i \in [1, N] \)} {
+        \nl Sample input data: \( \mathbf{T}_{\qty{24}{\hour}} \) \tcp*[l]{see \cref{eq:input_24_window}} \label{alg:pretrain_epoch_start}
+        \nl Apply variable dropout: \( \mathbf{T}'_{\qty{24}{\hour}} \) \tcp*[l]{see \cref{eq:variable_dropout}}
+        \nl Compute target vector: \( \mathbf{z} \in \mathbb{R}^{|\mathcal{F}|} \) \tcp*[l]{see \cref{eq:forecast_target}}
+        \nl Compute forecast mask: \(\mathbf{m} \in \{0, 1\}^{|\mathcal{F}|}\) \;
+        \nl Forecast values: \(\hat{\mathbf{z}} = \mathcal{M}_{pt}(\mathbf{d}_i,\mathbf{T}'_{\qty{24}{\hour}}) \) \;
+        \nl Accumulate loss: \(\mathcal{L}_{acc} \mathrel{+} = \mathcal{L}^{train}_{mMSE} (\mathbf{z}_i, \hat{\mathbf{z}}_i, \mathbf{m}) \) \tcp*[l]{see \cref{eq:mmse}} \label{alg:pretrain_compute_loss}
+        \If{\(i \mod \text{batch size} = 0\)} {
+            \nl Backpropagate and update model weights \;
+            \nl Reset accumulated loss \(\mathcal{L}_{acc} = 0\) \;
+        }
+    }
+    \nl Repeat \crefrange{alg:pretrain_epoch_start}{alg:pretrain_compute_loss} for \(\mathcal{D}_{val}\) and compute validation loss \(\mathcal{L}^{val}_{mMSE} \) \;
+}
+\textbf{Evaluation:} \\
+\nl Repeat \crefrange{alg:pretrain_epoch_start}{alg:pretrain_compute_loss} for \(\mathcal{D}_{test}\) and compute test loss \(\mathcal{L}^{test}_{mMSE} \) \;
+\end{algorithm}

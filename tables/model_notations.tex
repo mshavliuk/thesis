@@ -1,0 +1,23 @@
+\begin{tabular}{ll}
+\toprule
+\textbf{Notation} & \textbf{Definition} \\
+\midrule
+\(t_i \in \mathbb{R}_{\geq 0}\) & Time of \(i\)th observation \\
+\(f_i \in \mathcal{F}\) & Clinical variable of \(i\)th observation \\
+\(v_i \in \mathbb{R}\) & Value of \(i\)th observation \\
+\(\bar{t}_i, \bar{v}_i\) & Normalized time and value \\
+\(\mathbf{T}\) & Multivariate time series \(\{(t_i, f_i, v_i)\}_{i=1}^n\) \\
+\(\mathbf{e}_i^f, \mathbf{e}_i^v, \mathbf{e}_i^t \in \mathbb{R}^d\) & Feature, value and time embeddings for \(f_i\) \\
+\(\mathbf{e}_i \in \mathbb{R}^d = \mathbf{e}_i^f + \mathbf{e}_i^v + \mathbf{e}_i^t\) & Initial triplet embedding for \(i\)th observation \\
+\(\mathbf{E} \in \mathbb{R}^{n \times d}\) & Sequence of triplet embeddings \\
+\(\mathbf{C} \in \mathbb{R}^{n \times d}\) & Contextual triplet embeddings \\
+\(\alpha_i\) & Attention weight for \(i\)th contextual embedding \\
+\(\mathbf{e}^T \in \mathbb{R}^d\) & Time-series embedding \\
+\(\mathbf{d} \in \mathbb{R}^D\) & Demographics vector \\
+\(\mathbf{e}^d \in \mathbb{R}^d\) & Demographics embedding \\
+\(\mathbf{W}_\cdot \in \mathbb{M}\) & Weight matrix \\
+\(\mathbf{b}_\cdot \in \mathbb{R}^d\) & Bias vector \\
+\(\mathcal{M}, \mathcal{M}_{pt}, \mathcal{M}_{ft}\) & Backbone, pretrained and fine-tuned models \\
+\(\mathcal{D}_{\text{split}}, \mathcal{D}'_{\text{split}} \) & Pretraining and fine-tuning datasets for corresponding splits \\
+\bottomrule
+\end{tabular}

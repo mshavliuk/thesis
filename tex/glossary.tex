@@ -1,61 +1,25 @@
 % Acronyms and abbreviations
-% Syntax: \newacronym{internal_code}{label}{description}
+\newacronym{ehr}{EHR}{Electronic Health Record}
+\newacronym{ecdf}{ECDF}{Empirical Cumulative Distribution Function}
 
-\newacronym{tau}{TAU}{Tampere University}
-\newacronym{tuni}{TUNI}{Tampere Universities}
-\newacronym{url}{URL}{Uniform Resource Locator}
+\newacronym{cve}{CVE}{Contextual Value Embedding}
+\newacronym{ffn}{FFN}{Feed-Forward Network}
+\newacronym{mha}{MHA}{Multi-Head Attention}
+\newacronym{cdf}{CDF}{Cumulative Distribution Function}
+\newacronym{auroc}{AUC-ROC}{Area Under the Receiver Operating Characteristic curve}
+\newacronym{aucpr}{AUC-PR}{Area Under the Precision-Recall Curve}
+\newacronym{minrp}{Min(Re-Pr)}{Minimum of Recall and Precision}
+\newacronym{mse}{MSE}{Mean Squared Error}
+\newacronym{mae}{MAE}{Mean Absolute Error}
+\newacronym{icu}{ICU}{Intensive Care Unit}
+\newacronym{mimiciii}{MIMIC-III}{Medical Information Mart for Intensive Care III}
+\newacronym{hipaa}{HIPAA}{Health Insurance Portability and Accountability Act}
+\newacronym{bce}{BCE}{Binary Cross-Entropy}
+\newacronym{wbce}{wBCE}{Weighted Binary Cross-Entropy}
+\newacronym{icd}{ICD}{International Classification of Diseases}
+
 
 % Usage: \gls{key}: Prints the acronym. The first time it appears, it prints the long form followed
 % by the short form in parentheses. Subsequent uses print the short form only.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Glossary entries
-% Syntax: \newglossaryentry{label}{name={term}, description={description}}
-
-\newglossaryentry{iso}{
-    name={ISO},
-    description={International Organization for Standardization}
-}
-
-\newglossaryentry{cc}{
-    name={CC licence},
-    description={Creative Commons licence}
-}
-
-\newglossaryentry{latex}{
-    name={\LaTeX},
-    description={a document preparation system for scientific writing},
-    sort={LaTeX}
-}
-
-\newglossaryentry{si}{
-    name={SI system},
-    description={international system of units (Syst\`eme international d'unit\'es in French)}
-}
-
-\newglossaryentry{acceleration}{
-name={\ensuremath{\mathbf{a}}},
-description={acceleration},
-sort={a}
-}
-
-\newglossaryentry{force}{
-name={\ensuremath{\mathbf{F}}},
-description={force},
-sort={F}
-}
-
-\newglossaryentry{mass}{
-name={\ensuremath{m}},
-description={mass},
-sort={m}
-}
-
-\newglossaryentry{reals}
-{
-name={\ensuremath{\mathbb{R}}},
-description={real numbers},
-sort={R}
-}
+% \glspl{key}: Plural form of \gls{key}.
+% \glsentrylong{key}: Prints the long form only.

@@ -1,0 +1,38 @@
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+\glsresetall
+
+In this thesis, our objective was to improve predictive modeling for mortality prediction in clinical settings by implementing \gls{ecdf} normalization and optimizing training parameters. We replicated and improved upon the methods of a selected paper, achieving significant computational performance gains, including a 10-fold increase in data processing speed and up to 30-fold improvement in training speed, while reducing memory usage and increasing predictive performance. We extended the original analysis by evaluating model performance beyond the \qty{50}{\percent} data fraction and validated the choice of \gls{wbce}, gradient clipping, and batch size to ensure proper model calibration. Our work addresses challenges associated with outliers, noise, and class imbalance in clinical data, thereby improving the stability, efficiency, and applicability of the model.
+
+Our primary contribution is demonstrating that \gls{ecdf} normalization is a viable alternative to the commonly used Z-score normalization in healthcare analytics, especially for handling outliers and improving model robustness in the presence of random noise.
+% TODO: We substantially improved the existing state-of-the-art model
+
+\section{Summary of Findings}
+
+Our findings demonstrate that \gls{ecdf} normalization offers significant advantages for predictive modeling in clinical settings, particularly in handling extreme values.  We observed a \qty{31}{\percent} reduction in \gls{mse} when forecasting the percentiles of time-series values, and a \qty{7}{\percent} improvement of {\gls{mae}} in predicting exact values, compared to Z-score normalization. This enables more precise percentile-based predictions, which are especially valuable in clinical contexts where the relative standing of a measurement within the population may be more informative than its exact numerical value. Forethermore, it demonstrated three times higher retention of the \gls{auroc} and two times higher retention of the \gls{aucpr} and \gls{minrp} under uniform noise, compared to Z-score normalization. These results suggest that \gls{ecdf} normalization can enhance the reliability and accuracy of predictive models in clinical applications, particularly when handling noisy and outlier-prone datasets, thereby reducing the need for extensive outlier removal.
+
+
+\section{Limitations}
+
+Despite the advantages of \gls{ecdf} normalization observed under uniform noise conditions, our experiments revealed several limitations. First, \gls{ecdf} normalization did not demonstrate increased robustness against Gaussian noise. It did not improve classification performance compared to Z-score normalization on a sanitized dataset with removed outliers, suggesting that its benefits may be context-dependent.
+
+Second, \gls{ecdf} normalization can be sensitive to the number of unique values in the data. The \gls{ecdf} may not accurately represent the true underlying distribution when the number of unique values is limited. As demonstrated in \cref{fig:ecdf_pathological}, linear interpolation was required to avoid overestimating or underestimating the forecast loss for inverse-transformed data. Similarly, small sample sizes may not provide enough data points to accurately estimate percentiles, adversely impacting the forward \gls{ecdf} transformation.
+
+Third, there are technical challenges associated with \gls{ecdf} normalization. The need to store the empirical distribution function entails retaining some of the original data, which may compromise privacy and potentially violate dataset licensing agreements. Furthermore, storing the \gls{ecdf} for variables with a large number of unique values can cause substantial memory usage. A generalized logistic (GL) function approximation of the \gls{ecdf}, introduced by \citeauthor{RobustDataScaling2016}~\cite{RobustDataScaling2016}, could offer a solution to these problems by reducing memory requirements and mitigating privacy concerns. Another possible solution is to discretize the \gls{ecdf} into 256 different levels by converting the values into 8-bit integers, which would also allow to improve computational efficiency and help achieve k-anonymity \cite{AchievingKanonymityPrivacy}.
+
+\section{Future Work}
+
+Future research can build upon our findings in several key areas to further enhance the model's performance and generalizability in the medical domain and beyond.
+
+Firstly, exploring analytical approximations of variable distributions could provide a more robust representation of the data. As part of an exploratory background analysis, we conducted preliminary tests using the Kolmogorov-Smirnov method, which indicated that certain variables closely align with specific theoretical distributions. For example, ``Bilirubin'' aligns with a Pareto distribution, ``Calcium'' with an inverse Gaussian, ``Cholesterol'' with a log-normal, and ``Phosphate'' with a generalized exponential distribution. Fitting these distributions using Bayesian methods could account for uncertainty, improve the modeling of underlying data distributions, and lead to more accurate quantile transformations.
+
+Secondly, extending the comparative analysis of \gls{ecdf} normalization against a broader range of normalization techniques would offer a comprehensive understanding of its relative strengths and weaknesses. Similarly to the work of  \citeauthor{ChoiceScalingTechnique2023}~\cite{ChoiceScalingTechnique2023}, future studies could directly compare \gls{ecdf} normalization with methods such as Min–Max Scaling, Maximum Absolute Scaling, Robust Scaling, and Quantile Transformation. Incorporating a wider variety of datasets, particularly those that have not undergone extensive preprocessing and validation, and including a larger set of variables beyond the 129 used in this study would help identify the most suitable normalization techniques for different data types and tasks.
+
+Lastly, there is currently a lack of readily available implementations of \gls{ecdf} normalization in popular machine learning libraries. Developing and integrating an \gls{ecdf} scaler into widely used frameworks like scikit-learn would facilitate its adoption and enable practitioners to easily apply this method in their workflows.
+
+These avenues represent significant opportunities for future research to advance predictive modeling techniques, enhance model robustness, and improve applicability across various domains.
+
+\section{Final Words}
+
+This thesis demonstrates the potential of methodological refinements in enhancing predictive models for healthcare applications. Through the implementation of \gls{ecdf} normalization and optimized training configurations, we have shown improvements in the computational efficiency and robustness of the model when handling outliers and noise often present in clinical data. These advancements, which enhance accessibility and adaptability to diverse data conditions, contribute meaningfully to the field of machine learning in healthcare.  Behind every data point in healthcare lies a patient, a story, and a pressing need for accurate, timely insights. We hope that the insights gained from this work encourage further research and inspire practical applications that make advanced predictive tools both more resilient and more impactful in a real-world setting.

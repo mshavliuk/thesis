@@ -11,7 +11,6 @@
 \makeatletter
 
 %%%%% CLASS OPTIONS %%%%%
-\newcommand{\@citationstyle}{ieee}
 
 % Define a conditional flag
 \newif\ifdraftmode
@@ -37,7 +36,6 @@
 \catcode30=12
 % The pdfx package loads hyperref and xcolor packages, so you don’t have to call these explicitly.
 
-
 % UTF-8 input
 \RequirePackage[utf8]{inputenc}
 
@@ -49,8 +47,8 @@
 \RequirePackage
     [top=2.5cm,
     bottom=2.5cm,
-    left=4cm,
-    right=2cm]{geometry}
+    left=3cm,
+    right=3cm]{geometry}
 \special{papersize={210mm,297mm}}
 \RequirePackage{fancyhdr} % Custom headers and footers
 \RequirePackage[explicit]{titlesec}
@@ -96,21 +94,31 @@
 
 \RequirePackage{fancyvrb}
 % fancyvrb: Verbatim text, code blocks
- % TODO: DECIDE which package to use (fancyvrb or listings)
 
 \RequirePackage{titletoc}
 
-\ifdraftmode\else
+\ifdraftmode
+    \newcommand\textcite[1]{textcite(#1)}
+    \newcommand\citeyear[1]{citeyear(#1)}
+    \newcommand\citeauthor[1]{citeauthor(#1)}
+    \newcommand\citetitle[1]{citetitle(#1)}
+    \newcommand\citeurl[1]{citeurl(#1)}
+    \newcommand\cites[2]{cite(#1, #2)}
+    \renewcommand\cite[1]{cite(#1)}
+    \newcommand\citefield[2]{citefield}
+\else
     % List of symbols and abbreviations
     \RequirePackage[automake=immediate, nonumberlist, nopostdot]{glossaries}
 
 
     % Smart bibliography handling
-    \RequirePackage
-        [backend=biber,
+    \RequirePackage[
+        backend=biber,
         autolang=other,
-        citestyle=\@citationstyle,
-        bibstyle=\@citationstyle]{biblatex}
+        citestyle=ieee,
+        maxcitenames=2,
+        mincitenames=1,
+        bibstyle=ieee]{biblatex}
 
     \DefineBibliographyStrings{english}{%
         bibliography = {References},
@@ -194,7 +202,6 @@
 \titlespacing{\section}{0em}{18pt}{12pt}
 
 
-% Non-numerated Section % TODO: do we have non-numerated sections?
 \titleformat
     {name=\section, numberless}
     {\raggedright\bf\large}
@@ -215,7 +222,16 @@
 
 %%%%%%%% Glossary settings %%%%%%%%
 
-\ifdraftmode\else
+\ifdraftmode
+    %do nothing command
+    \newcommand\gls[1]{gls(#1)}
+    \newcommand\Gls[1]{gls(#1)}
+    \newcommand\glspl[1]{glspl(#1)}
+    \newcommand\Glspl[1]{Glspl(#1)}
+    \newcommand\glsentrylong[1]{glsentrylong(#1)}
+    \newcommand\glsreset[1]{}
+    \newcommand\glsresetall{}
+\else
     \newlength\glsnamewidth
     \newglossarystyle{taulong}{
         \setglossarystyle{long}
@@ -295,7 +311,7 @@
     {\raggedleft%
         \@thesistype\\%
         \@facultyname\\%
-        Examiner: \@examiner\\%
+        Examiners: \@examiner\\%
         \DTMDisplaydate%
             {\@finishyear}%
             {\@finishmonth}%
@@ -306,7 +322,7 @@
 }
 
 % Make the abstracts
-\renewcommand{\abstract}[1]{
+\renewcommand{\abstract}{
     \clearpage
     \chapter*{Abstract}
     \begin{spacing}{1.000}
