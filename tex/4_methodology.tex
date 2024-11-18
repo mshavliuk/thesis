@@ -686,14 +686,8 @@ Since \( X \) follows \( \text{Unif}(a, b) \), the term \( \frac{X - \frac{a + b
 This result shows that the Z-score transformation of uniformly distributed noise results in another uniform distribution over a fixed range, similar to the \gls{ecdf}-transformed noise. Since both normalization methods transform the noise into standardized forms that do not convey meaningful predictive information, the model performance under \qty{100}{\percent} noise is expected to be similar for both methods.
 
 
-\section{Reproducibility of the research}
 
-All experiment configurations were stored as \texttt{yaml} files and are available in the code repository at \citeurl{thesiscode}. The codebase is structured in a modular way, with separate files for data processing, model training, and evaluation. The orchestration of the Direct Aciclic Graph (DAG) of jobs, including data downloading and processing as well as model pretraining, selection and finetuning, is implemented as a Snakemake workflow, allowing to reproduce all of the experiments with a single \texttt{snakemake} command. We were able to achieve similar results by replicating our experiments on a provided TCSC HPC Cluster, which allowed us to validate the reproducibility of our results. Thanks to Snakemake, we were able to run the experiments in parallel on multiple nodes simultaneously, which significantly reduced the time required to complete the experiments.
-
-Furthermore, the results of the experiments, including all model checkpoints stored in the Weights\&Biases platform, which allows easy access to the training logs, model checkpoints, and evaluation metrics.
-
-
-\section{Conclusion of Methodology}
+\section{Chapter Conclusion}
 
 In this chapter, we detailed the architecture and training procedures of our proposed model, including the backbone network, pretraining and fine-tuning phases, evaluation metrics, and implementation specifics. We also discussed the baseline methods used for comparison and outlined the experiments designed to assess various aspects of model performance. The methodologies presented lay the groundwork for the results and analysis in the subsequent chapter.
 
