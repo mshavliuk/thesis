@@ -298,7 +298,7 @@
 % Make the title
 \renewcommand\maketitle{
     \thispagestyle{empty}
-    \vspace*{-1.88cm}\hspace*{-2.7cm}\includegraphics[height=2.07cm]{figures/tau-logo-eng.eps}
+    \vspace*{-1.88cm}\hspace*{-1.7cm}\includegraphics[height=2.07cm]{figures/tau-logo-eng.eps}
     \par\medskip
     \vspace{102pt}
     {\raggedleft\Large\@author\par}
